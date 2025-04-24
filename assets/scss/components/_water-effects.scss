@@ -1,11 +1,5 @@
+/* Water Effects Variables */
 :root {
-    --primary: rgb(58, 86, 158);
-    --primary-dark: rgb(0, 51, 102);
-    --secondary: rgb(57, 142, 113);
-    --accent: rgb(57, 84, 154);
-    --primary-light: rgb(52, 81, 151);
-    --primary-lighter: rgb(53, 74, 144);
-    
     /* Gradients */
     --gradient-water: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
 }
@@ -154,15 +148,6 @@
     animation: water-bg-animate 60s linear infinite;
 }
 
-@keyframes water-bg-animate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 /* Water Particles Effect - Replacing problematic waves */
 .water-particles-effect {
     position: absolute;
@@ -286,21 +271,7 @@
     --duration: 8s;
 }
 
-/* Modify bubble animation to rise from bottom */
-@keyframes bubble-float {
-    0% {
-        transform: translateY(50px) scale(0.5);
-        opacity: 0.5;
-    }
-    50% {
-        transform: translateY(-20px) scale(1);
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateY(-90px) scale(0.7);
-        opacity: 0;
-    }
-}
+/* Bubble animation uses bubble-float from _animations.scss */
 
 /* Add a gradient overlay at the bottom */
 .water-effect-header::after {
@@ -339,24 +310,7 @@
     animation-fill-mode: forwards;
 }
 
-@keyframes droplet-animation {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-    20% {
-        transform: scale(1);
-        opacity: 0.7;
-    }
-    80% {
-        transform: scale(1);
-        opacity: 0.7;
-    }
-    100% {
-        transform: scale(2);
-        opacity: 0;
-    }
-}
+/* Droplet animation uses droplet-animation from _animations.scss */
 
 /* Service Cards */
 .service-card {
@@ -558,36 +512,7 @@
     animation: particle-animate 8s ease-out forwards;
 }
 
-@keyframes particle-animate {
-    0% {
-        transform: translateY(0) translateX(0);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.5;
-    }
-    100% {
-        transform: translateY(-100px) translateX(20px);
-        opacity: 0;
-    }
-}
-
-/* Floating Animation */
-@keyframes floating {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
-
-.float-animation {
-    animation: floating 6s ease-in-out infinite;
-}
+/* Particle and floating animations use particle-animate and floating from _animations.scss */
 
 /* Service Card Animations */
 .service-card {
@@ -611,12 +536,7 @@
     pointer-events: none;
 }
 
-@keyframes ripple {
-    to {
-        transform: scale(2.5);
-        opacity: 0;
-    }
-}
+/* Ripple animation uses ripple from _animations.scss */
 
 /* Thumbnail Shine Effect */
 .service-item-thumbnail::after {
@@ -669,4 +589,4 @@
     background: #fff;
 }
 
-/* Remove all jQuery code from SCSS file as it's causing compilation errors */ 
+/* Remove all jQuery code from SCSS file as it's causing compilation errors */
