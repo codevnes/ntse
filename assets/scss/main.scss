@@ -1,0 +1,61 @@
+// Main SCSS file - Tổng hợp tất cả các file SCSS
+
+@use "sass:color";
+@use "sass:math";
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+@use "sass:selector";
+@use "sass:string";
+
+
+// Variables và Mixins (luôn import trước)
+@import './_variables';
+@import './components/mixins';
+
+// Base và Utilities
+@import './_utilities';
+@import './_animations';
+
+// Components
+@import './components/header';
+@import './components/button';
+@import './components/swiper';
+@import './components/project_card';
+@import './components/post_card';
+@import './components/hero';
+@import './components/footer';
+@import './components/sections';
+@import './components/navigation';
+@import './components/linhvuc';
+@import './components/counter';
+@import './components/water-effects';
+
+// Pages
+@import './pages/archive_project';
+@import './pages/partner';
+@import './pages/single_product';
+@import './pages/product_archive';
+@import './pages/contact';
+@import './pages/archive_project';
+@import './pages/project-single';
+@import './pages/single-post';
+@import './pages/service-single';
+@import './pages/news';
+@import './pages/blog_archive';
+
+.nts-breadcrumb {
+    color: var(--white);
+
+    i {
+        color: var(--white);
+    }
+
+    a {
+        color: var(--white);
+
+        &:hover {
+            color: var(--primary);
+        }
+    }
+}

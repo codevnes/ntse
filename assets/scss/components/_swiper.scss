@@ -1,0 +1,88 @@
+.swiper-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    margin-top: 32px;
+
+    .swiper-prev,
+    .swiper-next {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 9999px;
+        cursor: pointer;
+        border: 1px solid #D1E6FF;
+        opacity: 1;
+        background-color: #fff;
+        transition: .3s all linear;
+
+        &:not(.swiper-button-disabled):hover {
+            background-color: #FFE366;
+            border-color: #FFE366;
+        }
+    }
+
+    .swiper-button-disabled {
+        opacity: .4;
+    }
+
+    .swiper-pagination {
+        position: static;
+        flex: 1;
+
+        .swiper-pagination-bullet {
+            width: 29px !important;
+            height: 29px !important;
+            border-radius: 999px !important;
+            position: relative;
+            background-color: transparent;
+            opacity: 1;
+
+            &:after {
+                content: "";
+                width: 4px;
+                height: 4px;
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                border-radius: 99px;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        &.light {
+            .swiper-pagination-bullet-active {
+                border: 1px solid #fff;
+            }
+
+            .swiper-pagination-bullet:after {
+                background-color: #fff;
+            }
+        }
+        &.dark {
+            .swiper-pagination-bullet-active {
+                border: 1px solid #000;
+            }
+
+            .swiper-pagination-bullet:after {
+                background-color: #000;
+            }
+        }
+    }
+}
+
+// .dark-mode {
+//     .swiper-actions {
+//         .swiper-pagination-bullet-active {
+//             border: 1px solid #fff;
+//         }
+
+//         .swiper-pagination-bullet:after {
+//             background-color: #fff;
+//         }
+//     }
+// }

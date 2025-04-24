@@ -1,0 +1,600 @@
+// Project components
+
+// Project Archive Page
+.project-archive-page {
+    position: relative;
+    
+    .project-archive-header {
+        position: relative;
+        padding: 5rem 0 3rem;
+        background-color: rgba(var(--primary-rgb), 0.05);
+        overflow: hidden;
+
+        &.water-effect-header {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            
+            .water-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.02));
+                z-index: -1;
+            }
+            
+            .water-pattern-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0.15;
+                z-index: -1;
+            }
+            
+            .chemical-container {
+                position: absolute;
+                top: 20%;
+                right: 10%;
+                animation: float 8s infinite ease-in-out;
+                z-index: 1;
+                
+                .chemical-molecules-svg {
+                    opacity: 0.3;
+                    filter: drop-shadow(0 0 15px rgba(var(--primary-rgb), 0.3));
+                }
+            }
+            
+            .water-particles-effect {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+            }
+            
+            .bubbles-container {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                left: 0;
+                z-index: 0;
+                
+                .bubble {
+                    position: absolute;
+                    background: rgba(255, 255, 255, 0.2);
+                    border-radius: 50%;
+                    animation: bubble-anim linear infinite;
+                    
+                    &-1 {
+                        width: 30px;
+                        height: 30px;
+                        left: 10%;
+                        bottom: -30px;
+                        animation-duration: 12s;
+                        animation-delay: 0.1s;
+                    }
+                    
+                    &-2 {
+                        width: 15px;
+                        height: 15px;
+                        left: 20%;
+                        bottom: -15px;
+                        animation-duration: 10s;
+                        animation-delay: 1s;
+                    }
+                    
+                    &-3 {
+                        width: 25px;
+                        height: 25px;
+                        left: 30%;
+                        bottom: -25px;
+                        animation-duration: 14s;
+                        animation-delay: 2s;
+                    }
+                    
+                    &-4 {
+                        width: 20px;
+                        height: 20px;
+                        left: 40%;
+                        bottom: -20px;
+                        animation-duration: 8s;
+                        animation-delay: 0.5s;
+                    }
+                    
+                    &-5 {
+                        width: 35px;
+                        height: 35px;
+                        left: 50%;
+                        bottom: -35px;
+                        animation-duration: 12s;
+                        animation-delay: 1.5s;
+                    }
+                    
+                    &-6 {
+                        width: 22px;
+                        height: 22px;
+                        left: 60%;
+                        bottom: -22px;
+                        animation-duration: 10s;
+                        animation-delay: 3s;
+                    }
+                    
+                    &-7 {
+                        width: 18px;
+                        height: 18px;
+                        left: 70%;
+                        bottom: -18px;
+                        animation-duration: 16s;
+                        animation-delay: 2s;
+                    }
+                    
+                    &-8 {
+                        width: 28px;
+                        height: 28px;
+                        left: 80%;
+                        bottom: -28px;
+                        animation-duration: 9s;
+                        animation-delay: 1s;
+                    }
+                    
+                    &-9 {
+                        width: 15px;
+                        height: 15px;
+                        left: 90%;
+                        bottom: -15px;
+                        animation-duration: 11s;
+                        animation-delay: 0.5s;
+                    }
+                    
+                    &-10 {
+                        width: 20px;
+                        height: 20px;
+                        left: 95%;
+                        bottom: -20px;
+                        animation-duration: 13s;
+                        animation-delay: 1.5s;
+                    }
+                }
+                
+                .splash-container {
+                    position: absolute;
+                    bottom: 20px;
+                    left: 30%;
+                    animation: splash-anim 15s infinite ease-in-out;
+                    z-index: 1;
+                    opacity: 0.3;
+                }
+            }
+        }
+    }
+    
+    .project-header-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+        
+        &.float-animation {
+            animation: floating 4s ease-in-out infinite;
+        }
+        
+        .animated-droplet-icon {
+            margin: 0 auto 1.5rem;
+            width: 60px;
+            height: 90px;
+            opacity: 0.7;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            position: relative;
+            
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: -0.5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 3px;
+                background-color: var(--primary);
+                border-radius: 3px;
+            }
+        }
+        
+        .page-description {
+            color: var(--white);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.8;
+        }
+    }
+    
+    .water-particle {
+        position: absolute;
+        background-color: rgba(var(--primary-rgb), 0.4);
+        border-radius: 50%;
+        pointer-events: none;
+        
+        &.particle-animate {
+            animation: rise 8s ease-in forwards;
+        }
+    }
+}
+
+.project-archive {
+    padding: 3rem 0;
+}
+
+.project-card {
+    margin-bottom: 30px;
+    background-color: white;
+    border-radius: $radius-md;
+    box-shadow: $shadow-md;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: $shadow-lg;
+        
+        .project-item-title a {
+            color: var(--primary);
+        }
+        
+        .project-item-readmore a {
+            background-color: var(--primary);
+            color: white;
+        }
+    }
+    
+    &.animated-in {
+        animation: fadeInUp 0.5s ease-out forwards;
+    }
+    
+    .project-item-thumbnail {
+        position: relative;
+        overflow: hidden;
+        
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 16/9;
+            transition: transform 0.5s ease;
+        }
+        
+        .no-thumbnail {
+            background-color: rgba(var(--primary-rgb), 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            
+            .water-icon {
+                width: 60px;
+                height: 60px;
+                fill: var(--primary);
+                opacity: 0.5;
+            }
+        }
+        
+        .project-item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(var(--primary-rgb), 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            .hexagon-pattern {
+                width: 100%;
+                height: 100%;
+                opacity: 0.2;
+            }
+        }
+    }
+    
+    .project-item-content {
+        padding: 1.5rem;
+        position: relative;
+    }
+    
+    .project-item-title {
+        margin-bottom: 1rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        
+        a {
+            color: var(--black);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            
+            &:hover {
+                color: var(--primary);
+            }
+        }
+    }
+    
+    .project-item-readmore {
+        margin-top: 1rem;
+        text-align: right;
+        
+        a {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: rgba(var(--primary-rgb), 0.1);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: $radius-sm;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            
+            span {
+                margin-right: 0.5rem;
+            }
+            
+            i {
+                transition: transform 0.3s ease;
+            }
+            
+            &:hover {
+                background-color: var(--primary);
+                color: white;
+                
+                i {
+                    transform: translateX(3px);
+                }
+            }
+        }
+    }
+}
+
+.project-pagination {
+    text-align: center;
+    margin: 2rem 0 4rem;
+    
+    .page-numbers {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        margin: 0 0.2rem;
+        border-radius: $radius-sm;
+        background-color: white;
+        color: var(--primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: $shadow-sm;
+        
+        &.current {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        &:hover:not(.current) {
+            background-color: rgba(var(--primary-rgb), 0.1);
+        }
+    }
+}
+
+// Project overview
+.nts-project-overview {
+    .nts-project-breadcrumb {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .nts-project-title {
+        font-size: 2.4rem;
+        font-weight: 500;
+    }
+}
+
+// Project challenges
+.nts-project-challenge {
+    display: flex;
+    padding: 30px;
+    background: #fff;
+    border-radius: $radius-md;
+    box-shadow: $shadow-md;
+    overflow: hidden;
+
+    .col {
+        position: relative;
+    }
+
+    .challenge-image {
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        border-radius: 100%;
+        overflow: hidden;
+        position: absolute;
+        transform: translate(25%, -25%);
+        top: 0;
+        right: 0;
+
+        img {
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
+    }
+
+    .challenge-items {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .challenge-item {
+        display: flex;
+        gap: .5rem;
+        padding: 1rem;
+        border-radius: $radius-md;
+        background: var(--primary);
+        color: var(--white);
+
+        i {
+            font-size: 1.5rem;
+        }
+    }
+
+    .challenge-title {
+        font-size: 2.4rem;
+        font-weight: 500;
+        color: var(--primary);
+    }
+}
+
+// Technology card
+.nts-technology-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .technology-image {
+        width: 240px;
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 4/3;
+        overflow: hidden;
+
+        img {
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: $radius-sm;
+        }
+    }
+
+    .technology-title {
+        border-left: 2px solid var(--primary);
+        line-height: 1;
+        padding-left: 1rem;
+        color: var(--primary);
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// Ripple effect
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    z-index: 1;
+}
+
+// Animations for water effects
+@keyframes bubble-anim {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+    20% {
+        transform: translateY(-20%) scale(0.8);
+        opacity: 0.3;
+    }
+    40% {
+        transform: translateY(-40%) scale(1);
+        opacity: 0.5;
+    }
+    60% {
+        transform: translateY(-60%) scale(0.8);
+        opacity: 0.3;
+    }
+    80% {
+        transform: translateY(-80%) scale(0.6);
+        opacity: 0.2;
+    }
+    100% {
+        transform: translateY(-100%) scale(0.4);
+        opacity: 0;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes splash-anim {
+    0%, 100% {
+        transform: scale(0.8) rotate(0deg);
+        opacity: 0.2;
+    }
+    50% {
+        transform: scale(1) rotate(5deg);
+        opacity: 0.4;
+    }
+}
+
+@keyframes rise {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-500px) scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+} 

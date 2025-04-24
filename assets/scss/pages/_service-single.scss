@@ -1,0 +1,1248 @@
+/**
+ * Service Single Page Styles
+ */
+
+/* General Styles */
+.service-single-content {
+    overflow-x: hidden;
+    
+    section {
+        margin-bottom: 5rem;
+        position: relative;
+    }
+    
+    .section-header {
+        margin-bottom: 3rem;
+        
+        .section-icon {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: $font-bold;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .section-divider {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            
+            svg {
+                fill: rgba(var(--primary-rgb), 0.15);
+            }
+        }
+    }
+    
+    .water-card {
+        background-color: var(--white);
+        border-radius: $radius-md;
+        box-shadow: $shadow-md;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        transition: $transition-base;
+        
+        &:hover {
+            box-shadow: $shadow-xl;
+            transform: translateY(-5px);
+        }
+        
+        &.special-card {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            color: var(--white);
+        }
+    }
+    
+    .droplet-decoration {
+        position: absolute;
+        z-index: 0;
+        
+        &.droplet-top-right {
+            top: -20px;
+            right: -20px;
+        }
+        
+        &.droplet-bottom-left {
+            bottom: -20px;
+            left: -20px;
+        }
+    }
+    
+    .btn-water-ripple {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--primary);
+        color: var(--white);
+        border-radius: $radius-md;
+        text-decoration: none;
+        font-weight: $font-semibold;
+        position: relative;
+        overflow: hidden;
+        transition: $transition-base;
+        
+        span {
+            position: relative;
+            z-index: 2;
+            margin-right: 0.5rem;
+        }
+        
+        i {
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+        
+        &:hover {
+            background-color: var(--primary-dark);
+            
+            i {
+                transform: translateX(5px);
+            }
+            
+            &::after {
+                transform: scale(15);
+                opacity: 0;
+            }
+        }
+        
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.8s, opacity 0.8s;
+            z-index: 1;
+        }
+        
+        &:active::after {
+            transform: scale(15);
+            opacity: 0;
+        }
+        
+        &.primary-btn {
+            background-color: var(--secondary);
+            
+            &:hover {
+                background-color: darken(#28A34A, 10%);
+            }
+        }
+    }
+    
+    .water-drop-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        
+        li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            
+            .drop-icon {
+                margin-right: 1rem;
+                flex-shrink: 0;
+                fill: var(--primary);
+                animation: bobbing 3s ease-in-out infinite;
+                animation-delay: calc(var(--delay, 0) * 0.5s);
+            }
+            
+            .drop-content {
+                flex-grow: 1;
+            }
+        }
+    }
+}
+
+/* Hero Section */
+.service-hero {
+    position: relative;
+    padding: 6rem 0 8rem;
+    background-color: var(--primary-light);
+    color: var(--white);
+    overflow: hidden;
+    
+    .water-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+        opacity: 0.9;
+        z-index: 0;
+    }
+    
+    .water-pattern-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.07;
+        z-index: 1;
+    }
+    
+    .container {
+        position: relative;
+        z-index: 5;
+    }
+    
+    .service-title {
+        font-size: 2.8rem;
+        font-weight: $font-bold;
+        margin-bottom: 1.5rem;
+        color: var(--white);
+    }
+    
+    .service-short-description {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        max-width: 90%;
+        line-height: 1.6;
+    }
+    
+    .service-cta {
+        margin-top: 2rem;
+    }
+    
+    .service-featured-image-container {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .service-featured-image {
+        border-radius: $radius-lg;
+        overflow: hidden;
+        position: relative;
+        box-shadow: $shadow-xl;
+        
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.2), rgba(var(--primary-rgb), 0.5));
+        }
+        
+        .floating-droplets {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            
+            .droplet {
+                position: absolute;
+                width: 15px;
+                height: 15px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                animation: float 6s ease-in-out infinite;
+                
+                &.droplet-1 {
+                    top: 20%;
+                    left: 20%;
+                    animation-delay: 0s;
+                }
+                
+                &.droplet-2 {
+                    top: 60%;
+                    left: 70%;
+                    width: 10px;
+                    height: 10px;
+                    animation-delay: 1s;
+                }
+                
+                &.droplet-3 {
+                    top: 80%;
+                    left: 30%;
+                    width: 8px;
+                    height: 8px;
+                    animation-delay: 2s;
+                }
+            }
+        }
+        
+        &:hover img {
+            transform: scale(1.05);
+        }
+    }
+    
+    .service-placeholder-image {
+        background-color: rgba(var(--primary-rgb), 0.1);
+        border-radius: $radius-lg;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        svg {
+            width: 80px;
+            height: 80px;
+            fill: var(--primary);
+        }
+    }
+    
+    .wave-bottom {
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 120px;
+        z-index: 5;
+    }
+    
+    .chemical-container {
+        position: absolute;
+        top: 10%;
+        right: 5%;
+        z-index: 2;
+        animation: float 10s ease-in-out infinite;
+        opacity: 0.6;
+    }
+    
+    .bubbles-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            animation: bubbleRise 15s linear infinite;
+            opacity: 0;
+        }
+        
+        .bubble-1 {
+            width: 35px;
+            height: 35px;
+            left: 10%;
+            bottom: -30px;
+            animation-delay: 0s;
+        }
+        
+        .bubble-2 {
+            width: 20px;
+            height: 20px;
+            left: 20%;
+            bottom: -30px;
+            animation-delay: 2s;
+        }
+        
+        .bubble-3 {
+            width: 15px;
+            height: 15px;
+            left: 30%;
+            bottom: -30px;
+            animation-delay: 4s;
+        }
+        
+        .bubble-4 {
+            width: 25px;
+            height: 25px;
+            left: 40%;
+            bottom: -30px;
+            animation-delay: 6s;
+        }
+        
+        .bubble-5 {
+            width: 30px;
+            height: 30px;
+            left: 50%;
+            bottom: -30px;
+            animation-delay: 8s;
+        }
+        
+        .bubble-6 {
+            width: 18px;
+            height: 18px;
+            left: 60%;
+            bottom: -30px;
+            animation-delay: 10s;
+        }
+        
+        .bubble-7 {
+            width: 22px;
+            height: 22px;
+            left: 70%;
+            bottom: -30px;
+            animation-delay: 12s;
+        }
+        
+        .bubble-8 {
+            width: 28px;
+            height: 28px;
+            left: 80%;
+            bottom: -30px;
+            animation-delay: 14s;
+        }
+        
+        .bubble-9 {
+            width: 12px;
+            height: 12px;
+            left: 90%;
+            bottom: -30px;
+            animation-delay: 1s;
+        }
+        
+        .bubble-10 {
+            width: 16px;
+            height: 16px;
+            left: 95%;
+            bottom: -30px;
+            animation-delay: 3s;
+        }
+    }
+    
+    .water-particles-effect {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        z-index: 2;
+    }
+}
+
+/* Service Overview Section */
+.service-overview-section {
+    padding: 4rem 0;
+    
+    .service-description {
+        margin-bottom: 3rem;
+        line-height: 1.7;
+        position: relative;
+    }
+    
+    .service-overview-cards {
+        .overview-card {
+            height: 100%;
+            transition: $transition-base;
+            position: relative;
+            z-index: 1;
+            
+            .card-icon {
+                margin-bottom: 1.5rem;
+                fill: var(--primary);
+            }
+            
+            .card-title {
+                margin-bottom: 1rem;
+                font-weight: $font-semibold;
+                color: var(--primary-dark);
+            }
+            
+            .card-content {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+            
+            .card-water-effect {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 5px;
+                background: var(--primary);
+                opacity: 0.3;
+                transition: height 0.3s ease;
+                z-index: -1;
+                border-radius: 0 0 $radius-md $radius-md;
+            }
+            
+            &:hover .card-water-effect {
+                height: 100px;
+            }
+            
+            &.highlight-card {
+                border-top: 5px solid var(--secondary);
+                
+                .card-icon {
+                    fill: var(--secondary);
+                }
+                
+                .card-water-effect {
+                    background: var(--secondary);
+                }
+            }
+        }
+    }
+}
+
+/* Service Process Section */
+.service-process-section {
+    padding: 4rem 0;
+    
+    .service-process-timeline {
+        position: relative;
+        padding: 2rem 0;
+        
+        .timeline-water-effect {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            width: 10px;
+            z-index: 0;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            
+            &:last-child {
+                margin-bottom: 0;
+            }
+            
+            .timeline-marker {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 50px;
+                background: var(--primary);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--white);
+                font-weight: $font-bold;
+                z-index: 2;
+                box-shadow: $shadow-md;
+                
+                .marker-content {
+                    position: relative;
+                    z-index: 2;
+                }
+                
+                .marker-ripple {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    background: var(--primary);
+                    opacity: 0.3;
+                    animation: ripple 2s linear infinite;
+                }
+            }
+            
+            .timeline-content {
+                width: 45%;
+                box-shadow: $shadow-md;
+                margin-top: 1rem;
+                
+                .timeline-title {
+                    color: var(--primary-dark);
+                    margin-bottom: 1rem;
+                    font-weight: $font-semibold;
+                }
+                
+                .timeline-body {
+                    margin-bottom: 1rem;
+                    line-height: 1.6;
+                    font-size: 0.95rem;
+                }
+                
+                .timeline-time {
+                    display: flex;
+                    align-items: center;
+                    font-size: 0.9rem;
+                    color: var(--primary);
+                    
+                    svg {
+                        margin-right: 0.5rem;
+                        fill: currentColor;
+                    }
+                }
+            }
+            
+            &.left {
+                .timeline-content {
+                    margin-left: auto;
+                }
+            }
+            
+            &.right {
+                .timeline-content {
+                    margin-right: auto;
+                }
+            }
+        }
+    }
+}
+
+/* Service Highlights Section */
+.service-highlights-section {
+    padding: 4rem 0;
+    
+    .highlights-list, .team-info, .tech-card, .cert-card {
+        height: 100%;
+        
+        h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            font-weight: $font-semibold;
+        }
+    }
+    
+    .tech-card, .cert-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        
+        .tech-icon, .cert-icon {
+            margin-bottom: 1.5rem;
+            fill: var(--white);
+        }
+        
+        .tech-title, .cert-title {
+            color: var(--white);
+        }
+        
+        .tech-content, .cert-content {
+            color: var(--white);
+            line-height: 1.6;
+        }
+    }
+    
+    .tech-card {
+        .hexagon-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+    }
+    
+    .cert-card {
+        background: linear-gradient(135deg, var(--secondary) 0%, darken(#28A34A, 10%) 100%);
+    }
+}
+
+/* Testimonials Section */
+.service-testimonials-section {
+    padding: 4rem 0;
+    
+    .testimonials-slider {
+        position: relative;
+        padding: 2rem 1rem;
+        
+        .testimonial-item {
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: $radius-md;
+            box-shadow: $shadow-sm;
+            margin: 0.5rem;
+            transition: $transition-base;
+            
+            &:hover {
+                box-shadow: $shadow-lg;
+                transform: translateY(-5px);
+            }
+            
+            .testimonial-rating {
+                display: flex;
+                margin-bottom: 1rem;
+                
+                svg {
+                    margin-right: 0.25rem;
+                    
+                    &.star-filled {
+                        fill: #FFD700;
+                    }
+                    
+                    &.star-empty {
+                        fill: #D3D3D3;
+                    }
+                }
+            }
+            
+            .testimonial-content {
+                font-style: italic;
+                line-height: 1.6;
+                margin-bottom: 1rem;
+                position: relative;
+                padding: 0 0.5rem;
+                
+                &::before, &::after {
+                    content: '"';
+                    font-size: 1.5rem;
+                    color: rgba(var(--primary-rgb), 0.3);
+                    line-height: 0;
+                    position: relative;
+                }
+                
+                &::before {
+                    top: 0.5rem;
+                    left: -0.5rem;
+                }
+                
+                &::after {
+                    bottom: 0;
+                    right: -0.5rem;
+                }
+            }
+            
+            .testimonial-author {
+                display: flex;
+                align-items: center;
+                
+                .author-avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    margin-right: 1rem;
+                    background-color: rgba(var(--primary-rgb), 0.1);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    
+                    svg {
+                        fill: var(--primary);
+                    }
+                }
+                
+                .author-info {
+                    .author-name {
+                        font-weight: $font-semibold;
+                        margin-bottom: 0.25rem;
+                        font-size: 1rem;
+                    }
+                    
+                    .author-role {
+                        font-size: 0.85rem;
+                        color: rgba(var(--black-rgb), 0.6);
+                    }
+                }
+            }
+        }
+        
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--primary);
+            
+            &::after {
+                font-size: 1.5rem;
+            }
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: var(--primary);
+        }
+    }
+}
+
+/* FAQ Section */
+.service-faq-section {
+    padding: 4rem 0;
+    
+    .faq-accordion {
+        .faq-item {
+            border-bottom: 1px solid rgba(var(--black-rgb), 0.1);
+            
+            &:last-child {
+                border-bottom: none;
+            }
+            
+            .faq-question {
+                padding: 1.5rem 0;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                
+                h3 {
+                    margin: 0;
+                    font-size: 1.1rem;
+                    font-weight: $font-semibold;
+                    color: var(--primary-dark);
+                    flex-grow: 1;
+                    padding-right: 1rem;
+                }
+                
+                .faq-toggle {
+                    flex-shrink: 0;
+                    
+                    svg {
+                        fill: var(--primary);
+                    }
+                    
+                    .minus-icon {
+                        display: none;
+                    }
+                }
+            }
+            
+            .faq-answer {
+                padding: 0 0 1.5rem;
+                display: none;
+                line-height: 1.6;
+                color: rgba(var(--black-rgb), 0.8);
+            }
+            
+            &.active {
+                .faq-question {
+                    .faq-toggle {
+                        .plus-icon {
+                            display: none;
+                        }
+                        
+                        .minus-icon {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* CTA & Related Section */
+.service-cta-section {
+    padding: 4rem 0;
+    
+    .cta-card {
+        padding: 3rem 2rem;
+        position: relative;
+        overflow: hidden;
+        
+        .water-pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            
+            .cta-title {
+                font-size: 2rem;
+                font-weight: $font-bold;
+                margin-bottom: 1rem;
+                color: var(--white);
+            }
+            
+            .cta-text {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+                max-width: 80%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .response-time {
+                display: inline-flex;
+                align-items: center;
+                margin-bottom: 1.5rem;
+                padding: 0.5rem 1rem;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: $radius-sm;
+                
+                svg {
+                    margin-right: 0.5rem;
+                    fill: var(--white);
+                }
+            }
+            
+            .cta-actions {
+                margin-top: 1rem;
+            }
+        }
+        
+        .cta-bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            
+            .bubble {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.15);
+                opacity: 0.5;
+                animation: float 6s ease-in-out infinite;
+                
+                &.bubble-1 {
+                    width: 100px;
+                    height: 100px;
+                    top: -30px;
+                    left: 10%;
+                    animation-delay: 0s;
+                }
+                
+                &.bubble-2 {
+                    width: 70px;
+                    height: 70px;
+                    bottom: -20px;
+                    right: 15%;
+                    animation-delay: 1s;
+                }
+                
+                &.bubble-3 {
+                    width: 50px;
+                    height: 50px;
+                    bottom: 30%;
+                    left: 5%;
+                    animation-delay: 2s;
+                }
+            }
+        }
+    }
+    
+    .related-services-section {
+        margin-top: 5rem;
+        
+        .related-service-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            height: 100%;
+            
+            .related-service-image {
+                position: relative;
+                border-radius: $radius-md $radius-md 0 0;
+                overflow: hidden;
+                height: 200px;
+                
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s ease;
+                }
+                
+                .no-thumbnail {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: rgba(var(--primary-rgb), 0.1);
+                    
+                    svg {
+                        width: 60px;
+                        height: 60px;
+                        fill: var(--primary);
+                    }
+                }
+                
+                .image-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+            }
+            
+            .related-service-content {
+                padding: 1.5rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                
+                .related-service-title {
+                    font-size: 1.1rem;
+                    color: var(--primary-dark);
+                    font-weight: $font-semibold;
+                    margin: 0;
+                    transition: color 0.3s ease;
+                }
+                
+                .related-service-arrow {
+                    opacity: 0;
+                    transform: translateX(-10px);
+                    transition: all 0.3s ease;
+                    
+                    svg {
+                        fill: var(--primary);
+                    }
+                }
+            }
+            
+            &:hover {
+                .related-service-image {
+                    img {
+                        transform: scale(1.1);
+                    }
+                    
+                    .image-overlay {
+                        opacity: 1;
+                    }
+                }
+                
+                .related-service-content {
+                    .related-service-title {
+                        color: var(--primary);
+                    }
+                    
+                    .related-service-arrow {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+            }
+        }
+    }
+    
+    .resources-section {
+        margin-top: 5rem;
+        
+        .resources-list {
+            .resource-links {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                
+                li {
+                    margin-bottom: 0.5rem;
+                    
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                    
+                    .resource-link {
+                        display: flex;
+                        align-items: center;
+                        padding: 1rem;
+                        text-decoration: none;
+                        color: inherit;
+                        border-radius: $radius-sm;
+                        transition: $transition-base;
+                        
+                        &:hover {
+                            background-color: rgba(var(--primary-rgb), 0.05);
+                            
+                            .resource-arrow {
+                                opacity: 1;
+                                transform: translateX(0);
+                            }
+                        }
+                        
+                        .resource-icon {
+                            margin-right: 1rem;
+                            flex-shrink: 0;
+                            
+                            svg {
+                                fill: var(--primary);
+                            }
+                        }
+                        
+                        .resource-info {
+                            flex-grow: 1;
+                            
+                            .resource-title {
+                                display: block;
+                                font-weight: $font-semibold;
+                                margin-bottom: 0.25rem;
+                            }
+                            
+                            .resource-url {
+                                display: block;
+                                font-size: 0.85rem;
+                                color: rgba(var(--black-rgb), 0.6);
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                max-width: 100%;
+                            }
+                        }
+                        
+                        .resource-arrow {
+                            flex-shrink: 0;
+                            opacity: 0;
+                            transform: translateX(-10px);
+                            transition: all 0.3s ease;
+                            
+                            svg {
+                                fill: var(--primary);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Water Effects & Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes bobbing {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes bubbleRise {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.5;
+    }
+    95% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-1000px) scale(1.2);
+        opacity: 0;
+    }
+}
+
+.water-particle {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+}
+
+.particle-animate {
+    animation: particleRise 8s ease-in-out;
+}
+
+@keyframes particleRise {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.5;
+    }
+    90% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-300px) translateX(var(--move-x, 0));
+        opacity: 0;
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: $breakpoint-lg) {
+    .service-single-content {
+        .service-hero {
+            padding: 4rem 0 6rem;
+            
+            .service-title {
+                font-size: 2.4rem;
+            }
+            
+            .service-featured-image-container {
+                margin-top: 2rem;
+            }
+        }
+        
+        .service-process-section {
+            .service-process-timeline {
+                .timeline-item {
+                    .timeline-marker {
+                        left: 0;
+                        transform: none;
+                    }
+                    
+                    .timeline-content {
+                        width: calc(100% - 70px);
+                        margin-left: 70px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .service-single-content {
+        section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-header {
+            margin-bottom: 2rem;
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        .service-hero {
+            padding: 3rem 0 5rem;
+            
+            .service-title {
+                font-size: 2rem;
+            }
+        }
+        
+        .service-highlights-section {
+            .tech-card, .cert-card, .team-info {
+                margin-top: 1.5rem;
+            }
+        }
+    }
+} 

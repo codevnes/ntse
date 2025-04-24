@@ -1,0 +1,434 @@
+// Counter Component - Số Liệu Nổi Bật
+
+// Common Styles
+.nts-counter-section {
+    padding: 4rem 0;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 800'%3E%3Cg fill-opacity='0.05'%3E%3Ccircle fill='%233A569E' cx='400' cy='400' r='600'/%3E%3Ccircle fill='%233A569E' cx='400' cy='400' r='500'/%3E%3Ccircle fill='%233A569E' cx='400' cy='400' r='300'/%3E%3Ccircle fill='%233A569E' cx='400' cy='400' r='200'/%3E%3Ccircle fill='%233A569E' cx='400' cy='400' r='100'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: cover;
+        opacity: 0.07;
+        z-index: -1;
+    }
+    
+    .nts-counter-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: $secondary;
+            border-radius: 2px;
+        }
+    }
+    
+    .nts-counter-title {
+        font-size: 2.5rem;
+        color: $primary;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
+    .nts-counter-subtitle {
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: rgba($black, 0.7);
+    }
+    
+    .nts-counter-grid {
+        margin-top: 2rem;
+    }
+    
+    .counter-value {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+        line-height: 1;
+    }
+    
+    .counter-number {
+        font-weight: 700;
+    }
+    
+    .counter-suffix {
+        margin-left: 2px;
+    }
+    
+    .counter-title {
+        margin: 0 0 0.5rem;
+    }
+    
+    .counter-desc {
+        color: rgba($black, 0.7);
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+}
+
+// Style 1 - Card nổi
+.nts-counter-style1 {
+    .nts-counter-item {
+        background: $white;
+        padding: 2.5rem 1.5rem;
+        border-radius: $radius-special-3;
+        text-align: center;
+        box-shadow: $shadow-sm;
+        transition: $transition-base;
+        height: 100%;
+        border-bottom: 3px solid $primary;
+        overflow: hidden;
+        position: relative;
+        
+        &:hover {
+            transform: translateY(-10px);
+            box-shadow: $shadow-lg;
+            
+            .counter-icon {
+                background: $secondary;
+                color: $white;
+                transform: scale(1.1);
+            }
+            
+            &::before {
+                width: 100%;
+            }
+        }
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, $primary 0%, $secondary 100%);
+            transition: width 0.4s ease;
+            z-index: 1;
+        }
+    }
+    
+    .counter-icon {
+        margin: 0 auto 1.5rem;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba($primary, 0.1);
+        border-radius: 50%;
+        color: $primary;
+        font-size: 2rem;
+        transition: all 0.4s ease;
+    }
+    
+    .counter-number {
+        font-size: 3.5rem;
+        color: $primary;
+    }
+    
+    .counter-suffix {
+        font-size: 2rem;
+        color: $primary;
+        font-weight: 600;
+    }
+    
+    .counter-title {
+        font-size: 1.2rem;
+        color: $primary;
+        font-weight: 600;
+    }
+}
+
+// Style 2 - Dọc có icon
+.nts-counter-style2 {
+    .nts-counter-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem;
+        transition: $transition-base;
+        height: 100%;
+        position: relative;
+        
+        &:hover {
+            .counter-icon {
+                transform: rotateY(360deg);
+                background: $secondary;
+                color: $white;
+            }
+            
+            .counter-number, .counter-suffix {
+                color: $secondary;
+            }
+        }
+    }
+    
+    .counter-icon {
+        margin-bottom: 1.5rem;
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba($primary, 0.1);
+        border-radius: 50%;
+        color: $primary;
+        font-size: 2.5rem;
+        transition: all 0.6s ease;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            width: 1px;
+            height: 40px;
+            background: rgba($primary, 0.2);
+            bottom: -25px;
+            z-index: -1;
+        }
+    }
+    
+    .counter-number {
+        font-size: 3rem;
+        color: $primary;
+        font-weight: 700;
+        transition: color 0.3s ease;
+    }
+    
+    .counter-suffix {
+        font-size: 2rem;
+        color: $primary;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+    
+    .counter-title {
+        font-size: 1.3rem;
+        color: $primary;
+        font-weight: 600;
+        margin-top: 0.5rem;
+    }
+    
+    .counter-desc {
+        margin-top: 0.5rem;
+    }
+}
+
+// Style 3 - Nền đậm, số lớn
+.nts-counter-style3 {
+    text-align: center;
+    padding: 5rem 0;
+    
+    .nts-counter-header {
+        &::after {
+            background: rgba($white, 0.3);
+        }
+    }
+    
+    .nts-counter-title,
+    .nts-counter-subtitle {
+        color: inherit;
+    }
+    
+    .nts-counter-item {
+        padding: 2rem 1rem;
+        position: relative;
+        transition: transform 0.3s ease;
+        
+        &:hover {
+            transform: translateY(-5px);
+            
+            .counter-icon {
+                transform: scale(1.1);
+            }
+        }
+        
+        &::before {
+            content: '';
+            position: absolute;
+            width: 1px;
+            height: 60%;
+            background: rgba($white, 0.2);
+            right: 0;
+            top: 20%;
+        }
+        
+        &:last-child::before {
+            display: none;
+        }
+    }
+    
+    .counter-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+        opacity: 0.9;
+    }
+    
+    .counter-number {
+        font-size: 4rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+    
+    .counter-suffix {
+        font-size: 2.5rem;
+        font-weight: 600;
+    }
+    
+    .counter-title {
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+        font-weight: 500;
+        opacity: 0.9;
+    }
+    
+    .counter-desc {
+        opacity: 0.8;
+        margin-top: 0.5rem;
+    }
+}
+
+// Animations
+.nts-animation-fade-in {
+    opacity: 0;
+    animation: fadeInAnimation 0.8s ease forwards;
+}
+
+.nts-animation-slide-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUpAnimation 0.8s ease forwards;
+}
+
+.nts-animation-zoom-in {
+    opacity: 0;
+    transform: scale(0.9);
+    animation: zoomInAnimation 0.8s ease forwards;
+}
+
+.nts-animation-flip {
+    opacity: 0;
+    transform: perspective(400px) rotateY(90deg);
+    animation: flipAnimation 0.8s ease forwards;
+}
+
+@keyframes fadeInAnimation {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUpAnimation {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomInAnimation {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes flipAnimation {
+    from {
+        transform: perspective(400px) rotateY(90deg);
+        opacity: 0;
+    }
+    40% {
+        transform: perspective(400px) rotateY(-10deg);
+        opacity: 1;
+    }
+    70% {
+        transform: perspective(400px) rotateY(10deg);
+    }
+    to {
+        transform: perspective(400px) rotateY(0);
+        opacity: 1;
+    }
+}
+
+// Delay Animation
+.delay-1 {
+    animation-delay: 0.2s;
+}
+.delay-2 {
+    animation-delay: 0.4s;
+}
+.delay-3 {
+    animation-delay: 0.6s;
+}
+.delay-4 {
+    animation-delay: 0.8s;
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+    .nts-counter-section {
+        .nts-counter-title {
+            font-size: 2rem;
+        }
+        
+        .counter-number {
+            font-size: 2.5rem;
+        }
+        
+        .counter-suffix {
+            font-size: 1.5rem;
+        }
+    }
+    
+    .nts-counter-style3 {
+        .nts-counter-item::before {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-sm) {
+    .nts-counter-style1 {
+        .counter-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+    }
+    
+    .nts-counter-style2 {
+        .counter-icon {
+            width: 80px;
+            height: 80px;
+            font-size: 2rem;
+        }
+    }
+    
+    .nts-counter-style3 {
+        .counter-number {
+            font-size: 3rem;
+        }
+        
+        .counter-suffix {
+            font-size: 2rem;
+        }
+    }
+} 

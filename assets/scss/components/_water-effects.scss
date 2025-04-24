@@ -1,0 +1,672 @@
+:root {
+    --primary: rgb(58, 86, 158);
+    --primary-dark: rgb(0, 51, 102);
+    --secondary: rgb(57, 142, 113);
+    --accent: rgb(57, 84, 154);
+    --primary-light: rgb(52, 81, 151);
+    --primary-lighter: rgb(53, 74, 144);
+    
+    /* Gradients */
+    --gradient-water: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+/* Water Effects Header */
+.water-effect-header {
+    position: relative;
+    background: var(--gradient-water);
+    color: #fff;
+    padding: 100px 0 60px;
+    overflow: hidden;
+    margin-bottom: 60px;
+    border-radius: 0 0 30px 30px;
+}
+
+.water-effect-header .page-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 10;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.water-effect-header .page-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #fff;
+}
+
+.water-effect-header .page-description {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 10;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.service-header-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Animated Droplet Icon */
+.animated-droplet-icon {
+    margin: 0 auto 20px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+}
+
+/* Water Pattern Background */
+.water-pattern-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.2;
+}
+
+.water-pattern {
+    color: #fff;
+}
+
+/* Chemical Molecules */
+.chemical-container {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    z-index: 2;
+    opacity: 0.6;
+}
+
+.chemical-molecules-svg {
+    color: #fff;
+    width: 120px;
+    height: 120px;
+}
+
+/* Ripple Container */
+.ripple-container {
+    position: absolute;
+    z-index: 2;
+}
+
+.water-ripple-svg {
+    color: #fff;
+    position: absolute;
+    top: 20%;
+    left: 15%;
+}
+
+.ripple-2 {
+    top: 60%;
+    left: 75%;
+}
+
+/* Splash Container */
+.splash-container {
+    position: absolute;
+    bottom: 25%;
+    left: 45%;
+    z-index: 3;
+    transform: scale(0.8);
+}
+
+.water-splash-svg {
+    color: #fff;
+    opacity: 0.7;
+}
+
+.water-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.1;
+}
+
+.water-bg::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffffff' fill-opacity='0.05' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z'%3E%3C/path%3E%3C/svg%3E");
+    animation: water-bg-animate 60s linear infinite;
+}
+
+@keyframes water-bg-animate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Water Particles Effect - Replacing problematic waves */
+.water-particles-effect {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.particle-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Remove all wave-related styles */
+.wave-container, .wave, .wave-1, .wave-2, .wave-inner, .wave-path {
+    display: none;
+}
+
+/* Enhance the other water effects to compensate for removed waves */
+.bubbles-container {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    z-index: 3;
+}
+
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    animation: bubble-float var(--duration) ease-in-out infinite;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 60%, rgba(255, 255, 255, 0) 100%);
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+/* Existing bubble styles */
+.bubble-1 {
+    width: 30px;
+    height: 30px;
+    bottom: 20px;
+    left: 10%;
+    --duration: 8s;
+}
+
+.bubble-2 {
+    width: 50px;
+    height: 50px;
+    bottom: 40px;
+    left: 20%;
+    --duration: 10s;
+}
+
+.bubble-3 {
+    width: 25px;
+    height: 25px;
+    bottom: 30px;
+    left: 40%;
+    --duration: 7s;
+}
+
+.bubble-4 {
+    width: 40px;
+    height: 40px;
+    bottom: 10px;
+    left: 60%;
+    --duration: 11s;
+}
+
+.bubble-5 {
+    width: 35px;
+    height: 35px;
+    bottom: 25px;
+    left: 80%;
+    --duration: 9s;
+}
+
+.bubble-6 {
+    width: 20px;
+    height: 20px;
+    bottom: 50px;
+    left: 85%;
+    --duration: 6s;
+}
+
+/* Add more bubbles */
+.bubble-7 {
+    width: 30px;
+    height: 30px;
+    bottom: 30px;
+    left: 15%;
+    --duration: 9s;
+}
+
+.bubble-8 {
+    width: 45px;
+    height: 45px;
+    bottom: 10px;
+    left: 35%;
+    --duration: 7s;
+}
+
+.bubble-9 {
+    width: 25px;
+    height: 25px;
+    bottom: 25px;
+    left: 65%;
+    --duration: 10s;
+}
+
+.bubble-10 {
+    width: 15px;
+    height: 15px;
+    bottom: 50px;
+    left: 85%;
+    --duration: 8s;
+}
+
+/* Modify bubble animation to rise from bottom */
+@keyframes bubble-float {
+    0% {
+        transform: translateY(50px) scale(0.5);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateY(-20px) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-90px) scale(0.7);
+        opacity: 0;
+    }
+}
+
+/* Add a gradient overlay at the bottom */
+.water-effect-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.2), transparent);
+    z-index: 1;
+}
+
+/* Water Droplets Container */
+.water-droplets-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.water-droplet {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 0 15px rgba(0, 164, 228, 0.5);
+    z-index: 5;
+}
+
+.water-droplet.droplet-animate {
+    animation: droplet-animation 3s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes droplet-animation {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    20% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    80% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Service Cards */
+.service-card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    background: #fff;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(var(--primary-rgb), 0.1);
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.service-item-thumbnail {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+}
+
+.service-item-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+.service-card:hover .service-item-thumbnail img {
+    transform: scale(1.1);
+}
+
+.no-thumbnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: var(--primary-light);
+}
+
+.water-icon {
+    width: 60px;
+    height: 60px;
+    color: var(--primary);
+}
+
+.service-item-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.5) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.service-card:hover .service-item-overlay {
+    opacity: 1;
+}
+
+.hexagon-pattern {
+    width: 100%;
+    height: 100%;
+    color: var(--primary);
+    opacity: 0.1;
+}
+
+.service-item-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #fff;
+}
+
+.service-item-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    position: relative;
+}
+
+.service-item-title:after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+}
+
+.service-card:hover .service-item-title:after {
+    width: 60px;
+}
+
+.service-item-title a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.service-item-title a:hover {
+    color: var(--primary);
+}
+
+.service-item-excerpt {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.service-item-readmore {
+    margin-top: auto;
+    text-align: right;
+}
+
+.btn-water-ripple {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-water-ripple:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+    transform: scale(0);
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    border-radius: 50px;
+}
+
+.btn-water-ripple:hover {
+    background: var(--primary-dark);
+    color: #fff;
+}
+
+.btn-water-ripple:hover:before {
+    transform: scale(2);
+}
+
+.service-pagination {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.service-pagination .page-numbers {
+    display: inline-block;
+    padding: 8px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    background: #f5f5f5;
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.service-pagination .page-numbers.current,
+.service-pagination .page-numbers:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+/* Enhanced Water Particles */
+.water-particle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 3;
+    pointer-events: none;
+}
+
+.particle-animate {
+    animation: particle-animate 8s ease-out forwards;
+}
+
+@keyframes particle-animate {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-100px) translateX(20px);
+        opacity: 0;
+    }
+}
+
+/* Floating Animation */
+@keyframes floating {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.float-animation {
+    animation: floating 6s ease-in-out infinite;
+}
+
+/* Service Card Animations */
+.service-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out, box-shadow 0.3s ease, all 0.3s ease;
+}
+
+.service-card.animated-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Button Ripple Effect */
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+/* Thumbnail Shine Effect */
+.service-item-thumbnail::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(30deg);
+    pointer-events: none;
+    transition: transform 0.7s ease-in-out;
+}
+
+.service-card:hover .service-item-thumbnail::after {
+    transform: translateX(500%) rotate(30deg);
+}
+
+/* Enhanced Button */
+.btn-water-ripple {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+.btn-water-ripple:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.4);
+}
+
+/* Enhanced Page Title */
+.water-effect-header .page-title {
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    position: relative;
+}
+
+.water-effect-header .page-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #fff;
+}
+
+/* Remove all jQuery code from SCSS file as it's causing compilation errors */ 
