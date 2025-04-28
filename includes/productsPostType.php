@@ -31,7 +31,7 @@ function nts_register_product_post_type() {
         'hierarchical'       => false,
         'menu_position'      => 5,
         'menu_icon'          => 'dashicons-products',
-        'supports'           => ['title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'],
+        'supports'           => ['title', 'editor', 'thumbnail', 'excerpt'],
         'show_in_rest'       => true,
     ];
 
@@ -117,6 +117,16 @@ function nts_add_product_meta_boxes() {
         'nts_product_hero',
         __('Hero Banner', 'flatsome'),
         'nts_product_hero_callback',
+        'product',
+        'normal',
+        'high'
+    );
+
+    // Giới thiệu sản phẩm (dưới banner)
+    add_meta_box(
+        'nts_product_introduction',
+        __('Giới thiệu sản phẩm (hiển thị dưới banner)', 'flatsome'),
+        'nts_product_introduction_callback',
         'product',
         'normal',
         'high'
@@ -241,7 +251,7 @@ function nts_product_hero_callback($post) {
     $product_type = get_post_meta($post->ID, '_product_type', true);
     $hero_image_id = get_post_meta($post->ID, '_hero_image_id', true);
     $short_description = get_post_meta($post->ID, '_short_description', true);
-    
+
     // Hiển thị form
     ?>
     <div class="nts-product-meta-box">
@@ -283,13 +293,13 @@ function nts_product_hero_callback($post) {
             <input type="hidden" id="hero_image_id" name="hero_image_id" value="<?php echo esc_attr($hero_image_id); ?>">
             <button type="button" class="button" id="upload_hero_image_button"><?php _e('Tải lên / Chọn hình ảnh', 'flatsome'); ?></button>
             <button type="button" class="button" id="remove_hero_image_button" <?php echo empty($hero_image_id) ? 'style="display:none"' : ''; ?>><?php _e('Xóa hình ảnh', 'flatsome'); ?></button>
-            
+
             <div class="image-preview" id="hero_image_preview">
                 <?php if (!empty($hero_image_id)) : ?>
                     <?php echo wp_get_attachment_image($hero_image_id, 'medium'); ?>
                 <?php endif; ?>
             </div>
-            
+
             <p class="description"><?php _e('Chọn hình ảnh chất lượng cao cho banner hero', 'flatsome'); ?></p>
         </div>
 
@@ -309,7 +319,7 @@ function nts_product_hero_callback($post) {
                 image_frame.open();
                 return;
             }
-            
+
             image_frame = wp.media({
                 title: '<?php _e("Chọn hoặc tải lên hình ảnh", "flatsome"); ?>',
                 button: {
@@ -317,20 +327,125 @@ function nts_product_hero_callback($post) {
                 },
                 multiple: false
             });
-            
+
             image_frame.on('select', function() {
                 var attachment = image_frame.state().get('selection').first().toJSON();
                 $('#hero_image_id').val(attachment.id);
                 $('#hero_image_preview').html('<img src="' + attachment.url + '" alt="" style="max-width:100%;">');
                 $('#remove_hero_image_button').show();
             });
-            
+
             image_frame.open();
         });
-        
+
         $('#remove_hero_image_button').click(function() {
             $('#hero_image_id').val('');
             $('#hero_image_preview').html('');
+            $(this).hide();
+        });
+    });
+    </script>
+    <?php
+}
+
+// Callback function cho Giới thiệu sản phẩm metabox
+function nts_product_introduction_callback($post) {
+    wp_nonce_field('nts_product_introduction_nonce', 'nts_product_introduction_nonce');
+
+    // Lấy giá trị hiện tại
+    $introduction_title = get_post_meta($post->ID, '_introduction_title', true);
+    $introduction_content = get_post_meta($post->ID, '_introduction_content', true);
+    $introduction_image_id = get_post_meta($post->ID, '_introduction_image_id', true);
+    $introduction_button_text = get_post_meta($post->ID, '_introduction_button_text', true);
+    $introduction_button_url = get_post_meta($post->ID, '_introduction_button_url', true);
+
+    // Hiển thị form
+    ?>
+    <div class="nts-product-meta-box">
+        <p class="description" style="margin-bottom: 15px; color: #0073aa; font-style: italic;"><?php _e('Phần này sẽ hiển thị ngay dưới banner hero, giúp giới thiệu sản phẩm một cách hấp dẫn.', 'flatsome'); ?></p>
+
+        <div class="form-field">
+            <label for="introduction_title"><?php _e('Tiêu đề giới thiệu:', 'flatsome'); ?></label>
+            <input type="text" id="introduction_title" name="introduction_title" value="<?php echo esc_attr($introduction_title); ?>" placeholder="<?php _e('Ví dụ: Giải pháp lọc nước tiên tiến', 'flatsome'); ?>">
+            <p class="description"><?php _e('Tiêu đề chính của phần giới thiệu', 'flatsome'); ?></p>
+        </div>
+
+        <div class="form-field">
+            <label for="introduction_content"><?php _e('Nội dung giới thiệu:', 'flatsome'); ?></label>
+            <?php
+            wp_editor(
+                htmlspecialchars_decode($introduction_content),
+                'introduction_content',
+                [
+                    'media_buttons' => true,
+                    'textarea_name' => 'introduction_content',
+                    'textarea_rows' => 8,
+                    'teeny' => false
+                ]
+            );
+            ?>
+            <p class="description"><?php _e('Nội dung chi tiết giới thiệu sản phẩm', 'flatsome'); ?></p>
+        </div>
+
+        <div class="form-field">
+            <label for="introduction_image"><?php _e('Hình ảnh minh họa:', 'flatsome'); ?></label>
+            <input type="hidden" id="introduction_image_id" name="introduction_image_id" value="<?php echo esc_attr($introduction_image_id); ?>">
+            <button type="button" class="button" id="upload_introduction_image_button"><?php _e('Tải lên / Chọn hình ảnh', 'flatsome'); ?></button>
+            <button type="button" class="button" id="remove_introduction_image_button" <?php echo empty($introduction_image_id) ? 'style="display:none"' : ''; ?>><?php _e('Xóa hình ảnh', 'flatsome'); ?></button>
+
+            <div class="image-preview" id="introduction_image_preview">
+                <?php if (!empty($introduction_image_id)) : ?>
+                    <?php echo wp_get_attachment_image($introduction_image_id, 'medium'); ?>
+                <?php endif; ?>
+            </div>
+
+            <p class="description"><?php _e('Hình ảnh minh họa cho phần giới thiệu', 'flatsome'); ?></p>
+        </div>
+
+        <div class="form-field">
+            <label for="introduction_button_text"><?php _e('Nút kêu gọi hành động (tùy chọn):', 'flatsome'); ?></label>
+            <input type="text" id="introduction_button_text" name="introduction_button_text" value="<?php echo esc_attr($introduction_button_text); ?>" placeholder="<?php _e('Ví dụ: Tìm hiểu thêm', 'flatsome'); ?>">
+            <p class="description"><?php _e('Văn bản hiển thị trên nút (để trống nếu không muốn hiển thị nút)', 'flatsome'); ?></p>
+        </div>
+
+        <div class="form-field">
+            <label for="introduction_button_url"><?php _e('Liên kết của nút:', 'flatsome'); ?></label>
+            <input type="url" id="introduction_button_url" name="introduction_button_url" value="<?php echo esc_url($introduction_button_url); ?>" placeholder="https://...">
+            <p class="description"><?php _e('URL khi người dùng nhấp vào nút', 'flatsome'); ?></p>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        // Media Uploader for Introduction Image
+        $('#upload_introduction_image_button').click(function() {
+            var image_frame;
+            if (image_frame) {
+                image_frame.open();
+                return;
+            }
+
+            image_frame = wp.media({
+                title: '<?php _e("Chọn hoặc tải lên hình ảnh", "flatsome"); ?>',
+                button: {
+                    text: '<?php _e("Sử dụng hình ảnh này", "flatsome"); ?>',
+                },
+                multiple: false
+            });
+
+            image_frame.on('select', function() {
+                var attachment = image_frame.state().get('selection').first().toJSON();
+                $('#introduction_image_id').val(attachment.id);
+                $('#introduction_image_preview').html('<img src="' + attachment.url + '" alt="" style="max-width:100%;">');
+                $('#remove_introduction_image_button').show();
+            });
+
+            image_frame.open();
+        });
+
+        $('#remove_introduction_image_button').click(function() {
+            $('#introduction_image_id').val('');
+            $('#introduction_image_preview').html('');
             $(this).hide();
         });
     });
@@ -347,7 +462,7 @@ function nts_product_overview_callback($post) {
     $product_purpose = get_post_meta($post->ID, '_product_purpose', true);
     $target_customers = get_post_meta($post->ID, '_target_customers', true);
     $key_benefits = get_post_meta($post->ID, '_key_benefits', true);
-    
+
     // Hiển thị form
     ?>
     <div class="nts-product-meta-box">
@@ -396,7 +511,7 @@ function nts_product_technology_callback($post) {
     // Lấy giá trị hiện tại
     $materials = get_post_meta($post->ID, '_product_materials', true);
     $production_technology = get_post_meta($post->ID, '_production_technology', true);
-    
+
     // Hiển thị form
     ?>
     <div class="nts-product-meta-box">
@@ -444,7 +559,7 @@ function nts_product_applications_callback($post) {
     // Lấy giá trị hiện tại
     $applications = get_post_meta($post->ID, '_product_applications', true);
     $certificates = get_post_meta($post->ID, '_product_certificates', true);
-    
+
     // Hiển thị form
     ?>
     <div class="nts-product-meta-box">
@@ -483,7 +598,7 @@ function nts_product_reviews_callback($post) {
     if (!is_array($reviews)) {
         $reviews = array();
     }
-    
+
     // Hiển thị form
     ?>
     <div class="nts-product-meta-box">
@@ -518,27 +633,27 @@ function nts_product_reviews_callback($post) {
                 <?php foreach ($reviews as $index => $review) : ?>
                     <div class="review-item" data-index="<?php echo $index; ?>">
                         <h4><?php _e('Đánh giá', 'flatsome'); ?> #<span class="review-number"><?php echo $index + 1; ?></span></h4>
-                        
+
                         <div class="form-field">
                             <label><?php _e('Phản hồi thực tế:', 'flatsome'); ?></label>
                             <textarea name="product_reviews[<?php echo $index; ?>][content]" rows="3"><?php echo esc_textarea($review['content'] ?? ''); ?></textarea>
                         </div>
-                        
+
                         <div class="form-field">
                             <label><?php _e('Tên khách hàng:', 'flatsome'); ?></label>
                             <input type="text" name="product_reviews[<?php echo $index; ?>][name]" value="<?php echo esc_attr($review['name'] ?? ''); ?>">
                         </div>
-                        
+
                         <div class="form-field">
                             <label><?php _e('Chức danh và công ty:', 'flatsome'); ?></label>
                             <input type="text" name="product_reviews[<?php echo $index; ?>][position]" value="<?php echo esc_attr($review['position'] ?? ''); ?>">
                         </div>
-                        
+
                         <div class="form-field">
                             <label><?php _e('Điểm số đánh giá (1-5):', 'flatsome'); ?></label>
                             <input type="number" name="product_reviews[<?php echo $index; ?>][rating]" min="1" max="5" value="<?php echo esc_attr($review['rating'] ?? '5'); ?>">
                         </div>
-                        
+
                         <div class="review-actions">
                             <button type="button" class="button remove-review"><?php _e('Xóa đánh giá này', 'flatsome'); ?></button>
                         </div>
@@ -546,42 +661,42 @@ function nts_product_reviews_callback($post) {
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
-        
+
         <!-- Mẫu để thêm đánh giá mới -->
         <div class="review-template">
             <div class="review-item">
                 <h4><?php _e('Đánh giá', 'flatsome'); ?> #<span class="review-number"></span></h4>
-                
+
                 <div class="form-field">
                     <label><?php _e('Phản hồi thực tế:', 'flatsome'); ?></label>
                     <textarea name="product_reviews[INDEX][content]" rows="3"></textarea>
                 </div>
-                
+
                 <div class="form-field">
                     <label><?php _e('Tên khách hàng:', 'flatsome'); ?></label>
                     <input type="text" name="product_reviews[INDEX][name]" value="">
                 </div>
-                
+
                 <div class="form-field">
                     <label><?php _e('Chức danh và công ty:', 'flatsome'); ?></label>
                     <input type="text" name="product_reviews[INDEX][position]" value="">
                 </div>
-                
+
                 <div class="form-field">
                     <label><?php _e('Điểm số đánh giá (1-5):', 'flatsome'); ?></label>
                     <input type="number" name="product_reviews[INDEX][rating]" min="1" max="5" value="5">
                 </div>
-                
+
                 <div class="review-actions">
                     <button type="button" class="button remove-review"><?php _e('Xóa đánh giá này', 'flatsome'); ?></button>
                 </div>
             </div>
         </div>
-        
+
         <div class="add-review-button">
             <button type="button" class="button button-primary" id="add-review"><?php _e('Thêm đánh giá mới', 'flatsome'); ?></button>
         </div>
-        
+
         <script type="text/javascript">
         jQuery(document).ready(function($) {
             // Thêm đánh giá mới
@@ -589,28 +704,28 @@ function nts_product_reviews_callback($post) {
                 var container = $('#reviews-container');
                 var template = $('.review-template').html();
                 var index = container.find('.review-item').length;
-                
+
                 // Thay thế INDEX với index thực tế
                 template = template.replace(/INDEX/g, index);
-                
+
                 // Thêm vào container
                 container.append(template);
-                
+
                 // Cập nhật số đánh giá
                 container.find('.review-item:last .review-number').text(index + 1);
                 container.find('.review-item:last').attr('data-index', index);
             });
-            
+
             // Xóa đánh giá
             $(document).on('click', '.remove-review', function() {
                 if (confirm('<?php _e("Bạn có chắc chắn muốn xóa đánh giá này?", "flatsome"); ?>')) {
                     $(this).closest('.review-item').remove();
-                    
+
                     // Cập nhật lại các index
                     $('#reviews-container .review-item').each(function(i) {
                         $(this).attr('data-index', i);
                         $(this).find('.review-number').text(i + 1);
-                        
+
                         // Cập nhật tên trường
                         $(this).find('textarea, input').each(function() {
                             var name = $(this).attr('name');
@@ -637,7 +752,7 @@ function nts_product_faq_callback($post) {
     if (!is_array($faqs)) {
         $faqs = array();
     }
-    
+
     // Hiển thị form
     ?>
     <div class="nts-product-meta-box">
@@ -672,22 +787,22 @@ function nts_product_faq_callback($post) {
                 <?php foreach ($faqs as $index => $faq) : ?>
                     <div class="faq-item" data-index="<?php echo $index; ?>">
                         <h4><?php _e('Câu hỏi', 'flatsome'); ?> #<span class="faq-number"><?php echo $index + 1; ?></span></h4>
-                        
+
                         <div class="form-field">
                             <label><?php _e('Câu hỏi:', 'flatsome'); ?></label>
                             <input type="text" name="product_faqs[<?php echo $index; ?>][question]" value="<?php echo esc_attr($faq['question'] ?? ''); ?>">
                         </div>
-                        
+
                         <div class="form-field">
                             <label><?php _e('Trả lời:', 'flatsome'); ?></label>
                             <textarea name="product_faqs[<?php echo $index; ?>][answer]" rows="3"><?php echo esc_textarea($faq['answer'] ?? ''); ?></textarea>
                         </div>
-                        
+
                         <div class="form-field">
                             <label><?php _e('Link trang chi tiết (nếu có):', 'flatsome'); ?></label>
                             <input type="url" name="product_faqs[<?php echo $index; ?>][link]" value="<?php echo esc_url($faq['link'] ?? ''); ?>">
                         </div>
-                        
+
                         <div class="faq-actions">
                             <button type="button" class="button remove-faq"><?php _e('Xóa câu hỏi này', 'flatsome'); ?></button>
                         </div>
@@ -695,37 +810,37 @@ function nts_product_faq_callback($post) {
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
-        
+
         <!-- Mẫu để thêm câu hỏi mới -->
         <div class="faq-template">
             <div class="faq-item">
                 <h4><?php _e('Câu hỏi', 'flatsome'); ?> #<span class="faq-number"></span></h4>
-                
+
                 <div class="form-field">
                     <label><?php _e('Câu hỏi:', 'flatsome'); ?></label>
                     <input type="text" name="product_faqs[INDEX][question]" value="">
                 </div>
-                
+
                 <div class="form-field">
                     <label><?php _e('Trả lời:', 'flatsome'); ?></label>
                     <textarea name="product_faqs[INDEX][answer]" rows="3"></textarea>
                 </div>
-                
+
                 <div class="form-field">
                     <label><?php _e('Link trang chi tiết (nếu có):', 'flatsome'); ?></label>
                     <input type="url" name="product_faqs[INDEX][link]" value="">
                 </div>
-                
+
                 <div class="faq-actions">
                     <button type="button" class="button remove-faq"><?php _e('Xóa câu hỏi này', 'flatsome'); ?></button>
                 </div>
             </div>
         </div>
-        
+
         <div class="add-faq-button">
             <button type="button" class="button button-primary" id="add-faq"><?php _e('Thêm câu hỏi mới', 'flatsome'); ?></button>
         </div>
-        
+
         <script type="text/javascript">
         jQuery(document).ready(function($) {
             // Thêm câu hỏi mới
@@ -733,28 +848,28 @@ function nts_product_faq_callback($post) {
                 var container = $('#faqs-container');
                 var template = $('.faq-template').html();
                 var index = container.find('.faq-item').length;
-                
+
                 // Thay thế INDEX với index thực tế
                 template = template.replace(/INDEX/g, index);
-                
+
                 // Thêm vào container
                 container.append(template);
-                
+
                 // Cập nhật số câu hỏi
                 container.find('.faq-item:last .faq-number').text(index + 1);
                 container.find('.faq-item:last').attr('data-index', index);
             });
-            
+
             // Xóa câu hỏi
             $(document).on('click', '.remove-faq', function() {
                 if (confirm('<?php _e("Bạn có chắc chắn muốn xóa câu hỏi này?", "flatsome"); ?>')) {
                     $(this).closest('.faq-item').remove();
-                    
+
                     // Cập nhật lại các index
                     $('#faqs-container .faq-item').each(function(i) {
                         $(this).attr('data-index', i);
                         $(this).find('.faq-number').text(i + 1);
-                        
+
                         // Cập nhật tên trường
                         $(this).find('textarea, input').each(function() {
                             var name = $(this).attr('name');
@@ -805,55 +920,76 @@ function nts_save_product_details($post_id) {
     if (isset($_POST['product_features'])) {
         update_post_meta($post_id, '_product_features', sanitize_textarea_field($_POST['product_features']));
     }
-    
+
     // Lưu Hero Banner fields
     if (isset($_POST['product_type'])) {
         update_post_meta($post_id, '_product_type', sanitize_text_field($_POST['product_type']));
     }
-    
+
     if (isset($_POST['hero_image_id'])) {
         update_post_meta($post_id, '_hero_image_id', absint($_POST['hero_image_id']));
     }
-    
+
     if (isset($_POST['short_description'])) {
         update_post_meta($post_id, '_short_description', sanitize_textarea_field($_POST['short_description']));
     }
-    
+
+    // Lưu Introduction fields
+    if (isset($_POST['introduction_title'])) {
+        update_post_meta($post_id, '_introduction_title', sanitize_text_field($_POST['introduction_title']));
+    }
+
+    if (isset($_POST['introduction_content'])) {
+        update_post_meta($post_id, '_introduction_content', wp_kses_post($_POST['introduction_content']));
+    }
+
+    if (isset($_POST['introduction_image_id'])) {
+        update_post_meta($post_id, '_introduction_image_id', absint($_POST['introduction_image_id']));
+    }
+
+    if (isset($_POST['introduction_button_text'])) {
+        update_post_meta($post_id, '_introduction_button_text', sanitize_text_field($_POST['introduction_button_text']));
+    }
+
+    if (isset($_POST['introduction_button_url'])) {
+        update_post_meta($post_id, '_introduction_button_url', esc_url_raw($_POST['introduction_button_url']));
+    }
+
     // Lưu Tổng quan sản phẩm
     if (isset($_POST['product_overview'])) {
         update_post_meta($post_id, '_product_overview', wp_kses_post($_POST['product_overview']));
     }
-    
+
     if (isset($_POST['product_purpose'])) {
         update_post_meta($post_id, '_product_purpose', sanitize_textarea_field($_POST['product_purpose']));
     }
-    
+
     if (isset($_POST['target_customers'])) {
         update_post_meta($post_id, '_target_customers', sanitize_textarea_field($_POST['target_customers']));
     }
-    
+
     if (isset($_POST['key_benefits'])) {
         update_post_meta($post_id, '_key_benefits', sanitize_textarea_field($_POST['key_benefits']));
     }
-    
+
     // Lưu Công nghệ vật chất
     if (isset($_POST['product_materials'])) {
         update_post_meta($post_id, '_product_materials', wp_kses_post($_POST['product_materials']));
     }
-    
+
     if (isset($_POST['production_technology'])) {
         update_post_meta($post_id, '_production_technology', wp_kses_post($_POST['production_technology']));
     }
-    
+
     // Lưu Ứng dụng nổi bật
     if (isset($_POST['product_applications'])) {
         update_post_meta($post_id, '_product_applications', wp_kses_post($_POST['product_applications']));
     }
-    
+
     if (isset($_POST['product_certificates'])) {
         update_post_meta($post_id, '_product_certificates', sanitize_textarea_field($_POST['product_certificates']));
     }
-    
+
     // Lưu Đánh giá khách hàng
     if (isset($_POST['product_reviews']) && is_array($_POST['product_reviews'])) {
         $reviews = array();
@@ -869,7 +1005,7 @@ function nts_save_product_details($post_id) {
         }
         update_post_meta($post_id, '_product_reviews', $reviews);
     }
-    
+
     // Lưu FAQ
     if (isset($_POST['product_faqs']) && is_array($_POST['product_faqs'])) {
         $faqs = array();
