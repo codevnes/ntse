@@ -128,6 +128,15 @@ function nts_register_project_meta_boxes() {
         'normal',
         'high'
     );
+    
+    add_meta_box(
+        'project_statistics',
+        __('Số liệu dự án', 'textdomain'),
+        'nts_project_statistics_callback',
+        'project',
+        'normal',
+        'high'
+    );
 }
 add_action('add_meta_boxes', 'nts_register_project_meta_boxes');
 
@@ -219,6 +228,26 @@ function nts_project_details_callback($post) {
                             <textarea id="project_results" name="project_results" class="large-text" rows="8"><?php echo esc_textarea($project_results); ?></textarea>
                             <p class="nts-field-desc">Mô tả kết quả đạt được sau khi triển khai dự án.</p>
                         </div>
+                    </div>
+                    
+                    <div class="nts-field-group">
+                        <label class="nts-field-label">
+                            <span class="dashicons dashicons-chart-bar"></span>
+                            <span class="label-text">Tỷ lệ kết quả chính</span>
+                        </label>
+                        
+                        <div class="nts-meta-grid">
+                            <div class="nts-field-input">
+                                <label for="project_energy_saving" class="nts-sub-field-label">Tiết kiệm năng lượng (%)</label>
+                                <input type="number" id="project_energy_saving" name="project_energy_saving" value="<?php echo esc_attr(get_post_meta($post->ID, 'project_energy_saving', true)); ?>" class="small-text" min="0" max="100" placeholder="30">
+                            </div>
+                            
+                            <div class="nts-field-input">
+                                <label for="project_water_recycling" class="nts-sub-field-label">Tái sử dụng nước (%)</label>
+                                <input type="number" id="project_water_recycling" name="project_water_recycling" value="<?php echo esc_attr(get_post_meta($post->ID, 'project_water_recycling', true)); ?>" class="small-text" min="0" max="100" placeholder="85">
+                            </div>
+                        </div>
+                        <p class="nts-field-desc">Nhập tỷ lệ phần trăm cho các kết quả chính của dự án. Những thông tin này sẽ được hiển thị trong phần kết quả dự án.</p>
                     </div>
                 </div>
                 
@@ -317,6 +346,84 @@ function nts_project_gallery_callback($post) {
                 <span class="dashicons dashicons-info"></span>
                 Bạn có thể kéo thả để sắp xếp thứ tự hình ảnh.
             </p>
+        </div>
+    </div>
+    <?php
+}
+
+// Callback function cho metabox số liệu dự án
+function nts_project_statistics_callback($post) {
+    wp_nonce_field('nts_project_statistics_nonce', 'project_statistics_nonce');
+    
+    // Lấy dữ liệu đã lưu
+    $processing_capacity = get_post_meta($post->ID, 'project_processing_capacity', true);
+    $implementation_time = get_post_meta($post->ID, 'project_implementation_time', true);
+    $system_lifetime = get_post_meta($post->ID, 'project_system_lifetime', true);
+    $purity_efficiency = get_post_meta($post->ID, 'project_purity_efficiency', true);
+    
+    ?>
+    <div class="nts-meta-box-container">
+        <p class="nts-field-desc">
+            <span class="dashicons dashicons-chart-bar"></span>
+            Thông tin số liệu sẽ hiển thị trong phần "Số liệu dự án" ở trang chi tiết.
+        </p>
+        
+        <div class="nts-meta-grid">
+            <div class="nts-field-group">
+                <label for="project_processing_capacity" class="nts-field-label">
+                    <span class="dashicons dashicons-database"></span>
+                    <span class="label-text">Công suất xử lý</span>
+                </label>
+                <div class="nts-field-input">
+                    <div class="nts-number-field">
+                        <input type="text" id="project_processing_capacity" name="project_processing_capacity" value="<?php echo esc_attr($processing_capacity); ?>" class="regular-text" placeholder="Ví dụ: 1500">
+                        <span class="nts-unit">m³/ngày</span>
+                    </div>
+                    <p class="nts-field-desc">Nhập công suất xử lý nước của dự án.</p>
+                </div>
+            </div>
+            
+            <div class="nts-field-group">
+                <label for="project_implementation_time" class="nts-field-label">
+                    <span class="dashicons dashicons-clock"></span>
+                    <span class="label-text">Thời gian triển khai</span>
+                </label>
+                <div class="nts-field-input">
+                    <div class="nts-number-field">
+                        <input type="text" id="project_implementation_time" name="project_implementation_time" value="<?php echo esc_attr($implementation_time); ?>" class="regular-text" placeholder="Ví dụ: 3">
+                        <span class="nts-unit">tháng</span>
+                    </div>
+                    <p class="nts-field-desc">Nhập thời gian triển khai dự án.</p>
+                </div>
+            </div>
+            
+            <div class="nts-field-group">
+                <label for="project_system_lifetime" class="nts-field-label">
+                    <span class="dashicons dashicons-backup"></span>
+                    <span class="label-text">Tuổi thọ hệ thống</span>
+                </label>
+                <div class="nts-field-input">
+                    <div class="nts-number-field">
+                        <input type="text" id="project_system_lifetime" name="project_system_lifetime" value="<?php echo esc_attr($system_lifetime); ?>" class="regular-text" placeholder="Ví dụ: 25">
+                        <span class="nts-unit">năm</span>
+                    </div>
+                    <p class="nts-field-desc">Nhập tuổi thọ dự kiến của hệ thống xử lý nước.</p>
+                </div>
+            </div>
+            
+            <div class="nts-field-group">
+                <label for="project_purity_efficiency" class="nts-field-label">
+                    <span class="dashicons dashicons-chart-line"></span>
+                    <span class="label-text">Độ tinh khiết</span>
+                </label>
+                <div class="nts-field-input">
+                    <div class="nts-number-field">
+                        <input type="text" id="project_purity_efficiency" name="project_purity_efficiency" value="<?php echo esc_attr($purity_efficiency); ?>" class="regular-text" placeholder="Ví dụ: 98">
+                        <span class="nts-unit">%</span>
+                    </div>
+                    <p class="nts-field-desc">Nhập hiệu suất độ tinh khiết của nước sau xử lý.</p>
+                </div>
+            </div>
         </div>
     </div>
     <?php
@@ -431,6 +538,14 @@ function nts_create_project_admin_css() {
     color: #23282d;
 }
 
+.nts-sub-field-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #666;
+}
+
 .nts-field-label .dashicons {
     margin-right: 8px;
     color: #0073aa;
@@ -479,6 +594,28 @@ function nts_create_project_admin_css() {
     .nts-meta-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Number Field with Unit */
+.nts-number-field {
+    display: flex;
+    align-items: center;
+}
+
+.nts-number-field input {
+    flex-grow: 1;
+}
+
+.nts-unit {
+    margin-left: 8px;
+    padding: 8px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #666;
+    font-size: 13px;
+    line-height: 1;
+    white-space: nowrap;
 }
 
 /* Gallery Styles */
@@ -873,6 +1010,12 @@ function nts_save_project_meta($post_id) {
         return;
     }
     
+    // Kiểm tra nonce cho project statistics
+    if (!isset($_POST['project_statistics_nonce']) || !wp_verify_nonce($_POST['project_statistics_nonce'], 'nts_project_statistics_nonce')) {
+        error_log('Project statistics nonce verification failed');
+        return;
+    }
+    
     // Lưu dữ liệu details
     if (isset($_POST['project_description'])) {
         update_post_meta($post_id, 'project_description', wp_kses_post($_POST['project_description']));
@@ -900,6 +1043,32 @@ function nts_save_project_meta($post_id) {
     
     if (isset($_POST['project_technology'])) {
         update_post_meta($post_id, 'project_technology', sanitize_text_field($_POST['project_technology']));
+    }
+    
+    // Lưu dữ liệu số liệu dự án
+    if (isset($_POST['project_processing_capacity'])) {
+        update_post_meta($post_id, 'project_processing_capacity', sanitize_text_field($_POST['project_processing_capacity']));
+    }
+    
+    if (isset($_POST['project_implementation_time'])) {
+        update_post_meta($post_id, 'project_implementation_time', sanitize_text_field($_POST['project_implementation_time']));
+    }
+    
+    if (isset($_POST['project_system_lifetime'])) {
+        update_post_meta($post_id, 'project_system_lifetime', sanitize_text_field($_POST['project_system_lifetime']));
+    }
+    
+    if (isset($_POST['project_purity_efficiency'])) {
+        update_post_meta($post_id, 'project_purity_efficiency', sanitize_text_field($_POST['project_purity_efficiency']));
+    }
+    
+    // Lưu dữ liệu kết quả dự án
+    if (isset($_POST['project_energy_saving'])) {
+        update_post_meta($post_id, 'project_energy_saving', sanitize_text_field($_POST['project_energy_saving']));
+    }
+    
+    if (isset($_POST['project_water_recycling'])) {
+        update_post_meta($post_id, 'project_water_recycling', sanitize_text_field($_POST['project_water_recycling']));
     }
     
     // Lưu dữ liệu gallery

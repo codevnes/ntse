@@ -227,27 +227,33 @@ include_once(get_stylesheet_directory() . '/assets/svg/water-elements.svg');
                             </h3>
                             
                             <div class="results-content">
-                                <div class="results-text">
-                                    <?php
-                                    // Lấy kết quả dự án từ custom field (nếu có)
-                                    $project_results = get_post_meta(get_the_ID(), 'project_results', true);
-                                    if (!empty($project_results)) {
-                                        echo wpautop($project_results);
-                                    }
-                                    ?>
-                                </div>
+                                <?php
+                                // Lấy kết quả dự án từ custom field
+                                $project_results = get_post_meta(get_the_ID(), 'project_results', true);
+                                if (!empty($project_results)) {
+                                    echo '<div class="results-text">';
+                                    echo wpautop($project_results);
+                                    echo '</div>';
+                                }
+                                ?>
                                 
-                                <!-- Thêm biểu đồ kết quả -->
+                                <!-- Biểu đồ kết quả từ số liệu dự án -->
                                 <div class="results-highlights">
+                                    <?php
+                                    // Hiển thị kết quả độ tinh khiết nếu có
+                                    $purity_efficiency = get_post_meta(get_the_ID(), 'project_purity_efficiency', true);
+                                    if (!empty($purity_efficiency)) {
+                                    ?>
                                     <div class="result-highlight">
                                         <div class="result-icon">
                                             <svg width="36" height="36">
                                                 <use xlink:href="#water-quality"></use>
                                             </svg>
                                         </div>
-                                        <div class="result-value">97%</div>
+                                        <div class="result-value"><?php echo esc_html($purity_efficiency); ?>%</div>
                                         <div class="result-label">Chất lượng nước</div>
                                     </div>
+                                    <?php } ?>
                                     
                                     <div class="result-highlight">
                                         <div class="result-icon">
@@ -255,7 +261,7 @@ include_once(get_stylesheet_directory() . '/assets/svg/water-elements.svg');
                                                 <use xlink:href="#water-efficiency"></use>
                                             </svg>
                                         </div>
-                                        <div class="result-value">30%</div>
+                                        <div class="result-value"><?php echo esc_html(get_post_meta(get_the_ID(), 'project_energy_saving', true) ?: '30'); ?>%</div>
                                         <div class="result-label">Tiết kiệm năng lượng</div>
                                     </div>
                                     
@@ -265,7 +271,7 @@ include_once(get_stylesheet_directory() . '/assets/svg/water-elements.svg');
                                                 <use xlink:href="#water-recycling"></use>
                                             </svg>
                                         </div>
-                                        <div class="result-value">85%</div>
+                                        <div class="result-value"><?php echo esc_html(get_post_meta(get_the_ID(), 'project_water_recycling', true) ?: '85'); ?>%</div>
                                         <div class="result-label">Tái sử dụng nước</div>
                                     </div>
                                 </div>
@@ -430,25 +436,25 @@ include_once(get_stylesheet_directory() . '/assets/svg/water-elements.svg');
                             <h3 class="card-title">Số liệu dự án</h3>
                             <div class="stats-container">
                                 <div class="stat-item">
-                                    <div class="stat-value">1500</div>
+                                    <div class="stat-value"><?php echo esc_html(get_post_meta(get_the_ID(), 'project_processing_capacity', true) ?: '1500'); ?></div>
                                     <div class="stat-label">m³/ngày</div>
                                     <div class="stat-desc">Công suất xử lý</div>
                                 </div>
                                 
                                 <div class="stat-item">
-                                    <div class="stat-value">3</div>
+                                    <div class="stat-value"><?php echo esc_html(get_post_meta(get_the_ID(), 'project_implementation_time', true) ?: '3'); ?></div>
                                     <div class="stat-label">tháng</div>
                                     <div class="stat-desc">Thời gian triển khai</div>
                                 </div>
                                 
                                 <div class="stat-item">
-                                    <div class="stat-value">25</div>
+                                    <div class="stat-value"><?php echo esc_html(get_post_meta(get_the_ID(), 'project_system_lifetime', true) ?: '25'); ?></div>
                                     <div class="stat-label">năm</div>
                                     <div class="stat-desc">Tuổi thọ hệ thống</div>
                                 </div>
                                 
                                 <div class="stat-item">
-                                    <div class="stat-value">98%</div>
+                                    <div class="stat-value"><?php echo esc_html(get_post_meta(get_the_ID(), 'project_purity_efficiency', true) ?: '98'); ?>%</div>
                                     <div class="stat-label">hiệu suất</div>
                                     <div class="stat-desc">Độ tinh khiết</div>
                                 </div>
@@ -592,30 +598,54 @@ jQuery(document).ready(function($) {
         });
     }
     
+    // Function to check if element is in viewport
+    function isInViewport(element) {
+        var elementTop = $(element).offset().top;
+        var elementBottom = elementTop + $(element).outerHeight();
+        var viewportTop = $(window).scrollTop();
+        var viewportBottom = viewportTop + $(window).height();
+        return elementBottom > viewportTop && elementTop < viewportBottom;
+    }
+    
     // Animated number counting for stats
-    $('.stat-value').each(function () {
-        var $this = $(this);
-        var countTo = $this.text();
-        
-        $({ countNum: 0 }).animate({
-            countNum: countTo
-        },
-        {
-            duration: 2000,
-            easing: 'swing',
-            step: function() {
-                // Format with commas if needed
-                var formattedValue = Math.floor(this.countNum);
-                if (countTo.indexOf('%') !== -1) {
-                    formattedValue = formattedValue + '%';
-                }
-                $this.text(formattedValue);
-            },
-            complete: function() {
-                $this.text(countTo);
-            }
-        });
-    });
+    var statsAnimated = false;
+    
+    function animateStats() {
+        if (!statsAnimated && isInViewport('.stats-container')) {
+            statsAnimated = true;
+            $('.stat-value, .result-value').each(function () {
+                var $this = $(this);
+                var text = $this.text();
+                var countTo = parseInt(text.replace(/\D/g, ''), 10);
+                
+                if (isNaN(countTo)) return;
+                
+                $({ countNum: 0 }).animate({
+                    countNum: countTo
+                },
+                {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function() {
+                        var formattedValue = Math.floor(this.countNum);
+                        if (text.indexOf('%') !== -1) {
+                            formattedValue = formattedValue + '%';
+                        } else if (text.match(/[^\d]/)) {
+                            // If original text contains non-digit characters (like units)
+                            formattedValue = formattedValue + text.replace(/\d+/g, '');
+                        }
+                        $this.text(formattedValue);
+                    },
+                    complete: function() {
+                        $this.text(text);
+                    }
+                });
+            });
+        }
+    }
+    
+    // Check on scroll and on page load
+    $(window).on('scroll load', animateStats);
 });
 </script>
 
