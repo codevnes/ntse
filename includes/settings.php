@@ -2486,3 +2486,174 @@ function nts_get_contact_info($type = '') {
             return '';
     }
 }
+
+/**
+ * Shortcode để hiển thị thông tin liên hệ
+ * Sử dụng: [nts_contact_info type="phone|email|address|facebook|youtube|instagram|linkedin"]
+ * @param array $atts Các thuộc tính của shortcode
+ * @return string HTML hiển thị thông tin liên hệ
+ */
+function nts_contact_info_shortcode($atts = []) {
+    $atts = shortcode_atts([
+        'type' => 'phone',
+        'icon' => 'true',
+        'class' => '',
+    ], $atts);
+    
+    $type = $atts['type'];
+    $show_icon = filter_var($atts['icon'], FILTER_VALIDATE_BOOLEAN);
+    $class = sanitize_html_class($atts['class']);
+    
+    $value = nts_get_contact_info($type);
+    if (empty($value)) {
+        return '';
+    }
+    
+    $icon_html = '';
+    if ($show_icon) {
+        switch ($type) {
+            case 'phone':
+                $icon_html = '<i class="icon-phone"></i> ';
+                break;
+            case 'email':
+                $icon_html = '<i class="icon-envelop"></i> ';
+                break;
+            case 'address':
+                $icon_html = '<i class="icon-map-pin-fill"></i> ';
+                break;
+            case 'facebook':
+                $icon_html = '<i class="icon-facebook"></i> ';
+                break;
+            case 'youtube':
+                $icon_html = '<i class="icon-youtube"></i> ';
+                break;
+            case 'instagram':
+                $icon_html = '<i class="icon-instagram"></i> ';
+                break;
+            case 'linkedin':
+                $icon_html = '<i class="icon-linkedin"></i> ';
+                break;
+        }
+    }
+    
+    $output = '<span class="nts-contact-info ' . esc_attr($class) . '">';
+    $output .= $icon_html;
+    
+    switch ($type) {
+        case 'phone':
+            $phones = explode(',', $value);
+            foreach ($phones as $index => $phone) {
+                if ($index > 0) {
+                    $output .= ' / ';
+                }
+                $output .= '<a href="tel:' . esc_attr(trim($phone)) . '">' . esc_html(trim($phone)) . '</a>';
+            }
+            break;
+        case 'email':
+            $output .= '<a href="mailto:' . esc_attr($value) . '">' . esc_html($value) . '</a>';
+            break;
+        case 'address':
+            $output .= nl2br(esc_html($value));
+            break;
+        case 'facebook':
+        case 'youtube':
+        case 'instagram':
+        case 'linkedin':
+            $output .= '<a href="' . esc_url($value) . '" target="_blank" rel="noopener noreferrer">' . esc_html($value) . '</a>';
+            break;
+        default:
+            $output .= esc_html($value);
+    }
+    
+    $output .= '</span>';
+    return $output;
+}
+add_shortcode('nts_contact_info', 'nts_contact_info_shortcode');
+
+/**
+ * Widget hiển thị các liên kết mạng xã hội
+ */
+class NTS_Social_Links_Widget extends WP_Widget {
+    /**
+     * Khởi tạo widget
+     */
+    public function __construct() {
+        parent::__construct(
+            'nts_social_links',
+            __('NTS - Mạng xã hội', 'flatsome'),
+            array('description' => __('Hiển thị các liên kết mạng xã hội', 'flatsome'))
+        );
+    }
+
+    /**
+     * Hiển thị widget ở frontend
+     */
+    public function widget($args, $instance) {
+        $title = ! empty($instance['title']) ? apply_filters('widget_title', $instance['title']) : '';
+        
+        echo $args['before_widget'];
+        if (!empty($title)) {
+            echo $args['before_title'] . $title . $args['after_title'];
+        }
+        
+        echo '<ul class="nts-social-links">';
+        
+        $facebook = nts_get_contact_info('facebook');
+        if (!empty($facebook)) {
+            echo '<li><a href="' . esc_url($facebook) . '" target="_blank" rel="noopener noreferrer" class="social-facebook"><i class="icon-facebook"></i> Facebook</a></li>';
+        }
+        
+        $youtube = nts_get_contact_info('youtube');
+        if (!empty($youtube)) {
+            echo '<li><a href="' . esc_url($youtube) . '" target="_blank" rel="noopener noreferrer" class="social-youtube"><i class="icon-youtube"></i> Youtube</a></li>';
+        }
+        
+        $instagram = nts_get_contact_info('instagram');
+        if (!empty($instagram)) {
+            echo '<li><a href="' . esc_url($instagram) . '" target="_blank" rel="noopener noreferrer" class="social-instagram"><i class="icon-instagram"></i> Instagram</a></li>';
+        }
+        
+        $linkedin = nts_get_contact_info('linkedin');
+        if (!empty($linkedin)) {
+            echo '<li><a href="' . esc_url($linkedin) . '" target="_blank" rel="noopener noreferrer" class="social-linkedin"><i class="icon-linkedin"></i> LinkedIn</a></li>';
+        }
+        
+        echo '</ul>';
+        
+        echo $args['after_widget'];
+    }
+
+    /**
+     * Hiển thị form cài đặt trong admin
+     */
+    public function form($instance) {
+        $title = ! empty($instance['title']) ? $instance['title'] : __('Kết nối với chúng tôi', 'flatsome');
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_html_e('Tiêu đề:', 'flatsome'); ?></label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <p>
+            <?php _e('Liên kết mạng xã hội được lấy từ trang cài đặt Thông tin liên hệ. Bạn có thể cập nhật liên kết tại:', 'flatsome'); ?>
+            <a href="<?php echo admin_url('admin.php?page=nts-contact-info'); ?>"><?php _e('Cài đặt Thông tin liên hệ', 'flatsome'); ?></a>
+        </p>
+        <?php
+    }
+
+    /**
+     * Xử lý khi lưu widget
+     */
+    public function update($new_instance, $old_instance) {
+        $instance = array();
+        $instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : '';
+        return $instance;
+    }
+}
+
+/**
+ * Đăng ký Widget
+ */
+function nts_register_social_links_widget() {
+    register_widget('NTS_Social_Links_Widget');
+}
+add_action('widgets_init', 'nts_register_social_links_widget');
