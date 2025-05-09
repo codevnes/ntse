@@ -193,23 +193,74 @@
                         <ul class="contact-list">
                             <li>
                                 <i class="fas fa-phone"></i>
-                                <a href="tel:+84123456789">0123 456 789</a>
+                                <?php 
+                                $phone = nts_get_contact_info('phone');
+                                if (!empty($phone)) {
+                                    $phones = explode(',', $phone);
+                                    foreach ($phones as $index => $phone_number) {
+                                        if ($index > 0) {
+                                            echo '<br>';
+                                        }
+                                        echo '<a href="tel:' . esc_attr(trim($phone_number)) . '">' . esc_html(trim($phone_number)) . '</a>';
+                                    }
+                                } else {
+                                    echo '<a href="tel:+84123456789">0123 456 789</a>';
+                                }
+                                ?>
                             </li>
                             <li>
                                 <i class="fas fa-envelope"></i>
-                                <a href="mailto:info@xulynuoc.com">info@xulynuoc.com</a>
+                                <?php 
+                                $email = nts_get_contact_info('email');
+                                if (!empty($email)) {
+                                    echo '<a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a>';
+                                } else {
+                                    echo '<a href="mailto:info@xulynuoc.com">info@xulynuoc.com</a>';
+                                }
+                                ?>
                             </li>
                             <li>
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>123 Đường ABC, Quận XYZ, TP. HCM</span>
+                                <?php 
+                                $address = nts_get_contact_info('address');
+                                if (!empty($address)) {
+                                    echo '<span>' . nl2br(esc_html($address)) . '</span>';
+                                } else {
+                                    echo '<span>123 Đường ABC, Quận XYZ, TP. HCM</span>';
+                                }
+                                ?>
                             </li>
                         </ul>
 
                         <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                            <?php 
+                            $facebook = nts_get_contact_info('facebook');
+                            if (!empty($facebook)) {
+                                echo '<a href="' . esc_url($facebook) . '" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>';
+                            }
+                            
+                            $youtube = nts_get_contact_info('youtube');
+                            if (!empty($youtube)) {
+                                echo '<a href="' . esc_url($youtube) . '" class="social-link" target="_blank"><i class="fab fa-youtube"></i></a>';
+                            }
+                            
+                            $instagram = nts_get_contact_info('instagram');
+                            if (!empty($instagram)) {
+                                echo '<a href="' . esc_url($instagram) . '" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>';
+                            }
+                            
+                            $linkedin = nts_get_contact_info('linkedin');
+                            if (!empty($linkedin)) {
+                                echo '<a href="' . esc_url($linkedin) . '" class="social-link" target="_blank"><i class="fab fa-linkedin-in"></i></a>';
+                            }
+                            
+                            // Fallback if no social media links are set
+                            if (empty($facebook) && empty($youtube) && empty($instagram) && empty($linkedin)) {
+                                echo '<a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>';
+                                echo '<a href="#" class="social-link"><i class="fab fa-youtube"></i></a>';
+                                echo '<a href="#" class="social-link"><i class="fab fa-instagram"></i></a>';
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
