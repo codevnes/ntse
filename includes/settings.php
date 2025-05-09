@@ -84,6 +84,16 @@ function nts_register_content_settings_menu() {
         'nts_partners_page'
     );
 
+    // Thêm submenu "Thông tin liên hệ"
+    add_submenu_page(
+        'nts-content-settings',
+        __('Thông tin liên hệ', 'flatsome'),
+        __('Thông tin liên hệ', 'flatsome'),
+        'manage_options',
+        'nts-contact-info',
+        'nts_contact_info_page'
+    );
+
     // Đăng ký các setting
     add_action('admin_init', 'nts_register_content_settings');
 }
@@ -2297,3 +2307,182 @@ function nts_experts_shortcode($atts = []) {
 }
 // Đăng ký shortcode [nts_experts]
 add_shortcode('nts_experts', 'nts_experts_shortcode');
+
+// Đăng ký settings cho thông tin liên hệ
+function nts_register_contact_info_settings() {
+    // Đăng ký setting section
+    add_settings_section(
+        'nts_contact_info_section',
+        __('Thông tin liên hệ', 'flatsome'),
+        'nts_contact_info_section_callback',
+        'nts-contact-info'
+    );
+    
+    // Đăng ký các field
+    register_setting('nts-contact-info', 'nts_contact_phone');
+    add_settings_field(
+        'nts_contact_phone',
+        __('Số điện thoại', 'flatsome'),
+        'nts_contact_phone_callback',
+        'nts-contact-info',
+        'nts_contact_info_section'
+    );
+    
+    register_setting('nts-contact-info', 'nts_contact_email');
+    add_settings_field(
+        'nts_contact_email',
+        __('Email', 'flatsome'),
+        'nts_contact_info_email_callback',
+        'nts-contact-info',
+        'nts_contact_info_section'
+    );
+    
+    register_setting('nts-contact-info', 'nts_contact_address');
+    add_settings_field(
+        'nts_contact_address',
+        __('Địa chỉ', 'flatsome'),
+        'nts_contact_address_callback',
+        'nts-contact-info',
+        'nts_contact_info_section'
+    );
+    
+    register_setting('nts-contact-info', 'nts_contact_facebook');
+    add_settings_field(
+        'nts_contact_facebook',
+        __('Facebook', 'flatsome'),
+        'nts_contact_facebook_callback',
+        'nts-contact-info',
+        'nts_contact_info_section'
+    );
+    
+    register_setting('nts-contact-info', 'nts_contact_youtube');
+    add_settings_field(
+        'nts_contact_youtube',
+        __('Youtube', 'flatsome'),
+        'nts_contact_youtube_callback',
+        'nts-contact-info',
+        'nts_contact_info_section'
+    );
+    
+    register_setting('nts-contact-info', 'nts_contact_instagram');
+    add_settings_field(
+        'nts_contact_instagram',
+        __('Instagram', 'flatsome'),
+        'nts_contact_instagram_callback',
+        'nts-contact-info',
+        'nts_contact_info_section'
+    );
+    
+    register_setting('nts-contact-info', 'nts_contact_linkedin');
+    add_settings_field(
+        'nts_contact_linkedin',
+        __('LinkedIn', 'flatsome'),
+        'nts_contact_linkedin_callback',
+        'nts-contact-info',
+        'nts_contact_info_section'
+    );
+}
+add_action('admin_init', 'nts_register_contact_info_settings');
+
+/**
+ * Callback functions cho các field thông tin liên hệ
+ */
+function nts_contact_info_section_callback() {
+    echo '<p>' . __('Cài đặt thông tin liên hệ của công ty hiển thị trên website', 'flatsome') . '</p>';
+}
+
+function nts_contact_phone_callback() {
+    $value = get_option('nts_contact_phone');
+    echo '<input type="text" name="nts_contact_phone" value="' . esc_attr($value) . '" class="regular-text">';
+    echo '<p class="description">' . __('Nhập số điện thoại liên hệ (có thể nhập nhiều số, phân cách bằng dấu phẩy)', 'flatsome') . '</p>';
+}
+
+function nts_contact_info_email_callback() {
+    $value = get_option('nts_contact_email');
+    echo '<input type="email" name="nts_contact_email" value="' . esc_attr($value) . '" class="regular-text">';
+    echo '<p class="description">' . __('Nhập địa chỉ email liên hệ', 'flatsome') . '</p>';
+}
+
+function nts_contact_address_callback() {
+    $value = get_option('nts_contact_address');
+    echo '<textarea name="nts_contact_address" rows="3" class="large-text">' . esc_textarea($value) . '</textarea>';
+    echo '<p class="description">' . __('Nhập địa chỉ công ty', 'flatsome') . '</p>';
+}
+
+function nts_contact_facebook_callback() {
+    $value = get_option('nts_contact_facebook');
+    echo '<input type="url" name="nts_contact_facebook" value="' . esc_attr($value) . '" class="regular-text">';
+    echo '<p class="description">' . __('Nhập link Facebook', 'flatsome') . '</p>';
+}
+
+function nts_contact_youtube_callback() {
+    $value = get_option('nts_contact_youtube');
+    echo '<input type="url" name="nts_contact_youtube" value="' . esc_attr($value) . '" class="regular-text">';
+    echo '<p class="description">' . __('Nhập link Youtube', 'flatsome') . '</p>';
+}
+
+function nts_contact_instagram_callback() {
+    $value = get_option('nts_contact_instagram');
+    echo '<input type="url" name="nts_contact_instagram" value="' . esc_attr($value) . '" class="regular-text">';
+    echo '<p class="description">' . __('Nhập link Instagram', 'flatsome') . '</p>';
+}
+
+function nts_contact_linkedin_callback() {
+    $value = get_option('nts_contact_linkedin');
+    echo '<input type="url" name="nts_contact_linkedin" value="' . esc_attr($value) . '" class="regular-text">';
+    echo '<p class="description">' . __('Nhập link LinkedIn', 'flatsome') . '</p>';
+}
+
+/**
+ * Callback function cho trang thông tin liên hệ
+ */
+function nts_contact_info_page() {
+    // Kiểm tra quyền truy cập
+    if (!current_user_can('manage_options')) {
+        wp_die(__('Bạn không có quyền truy cập trang này.', 'flatsome'));
+    }
+
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html__('Thông tin liên hệ', 'flatsome'); ?></h1>
+        <p><?php _e('Quản lý thông tin liên hệ và mạng xã hội hiển thị trên website', 'flatsome'); ?></p>
+
+        <form method="post" action="options.php">
+            <?php
+            // Output các hidden fields cần thiết
+            settings_fields('nts-contact-info');
+            // Output các sections và fields
+            do_settings_sections('nts-contact-info');
+            // Nút submit
+            submit_button(__('Lưu thay đổi', 'flatsome'));
+            ?>
+        </form>
+    </div>
+    <?php
+}
+
+/**
+ * Hàm lấy thông tin liên hệ để sử dụng trong theme
+ * @param string $type Loại thông tin cần lấy (phone, email, address, facebook, youtube, instagram, linkedin)
+ * @return string Thông tin liên hệ
+ */
+function nts_get_contact_info($type = '') {
+    switch ($type) {
+        case 'phone':
+            return get_option('nts_contact_phone');
+        case 'email':
+            return get_option('nts_contact_email');
+        case 'address':
+            return get_option('nts_contact_address');
+        case 'facebook':
+            return get_option('nts_contact_facebook');
+        case 'youtube':
+            return get_option('nts_contact_youtube');
+        case 'instagram':
+            return get_option('nts_contact_instagram');
+        case 'linkedin':
+            return get_option('nts_contact_linkedin');
+        default:
+            return '';
+    }
+}
