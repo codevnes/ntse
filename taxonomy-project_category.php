@@ -7,6 +7,20 @@ get_header(); ?>
 
 <?php include_once(get_stylesheet_directory() . '/assets/svg/water-elements.svg'); ?>
 
+<?php
+// Add proper check for SVG file existence
+$svg_path = get_stylesheet_directory() . '/assets/svg/water-elements.svg';
+$svg_loaded = file_exists($svg_path);
+
+if (!$svg_loaded) {
+    // Fallback styles if SVG doesn't load
+    echo '<style>
+        .water-effect-header { background-color: #f0f8ff; }
+        .chemical-container, .water-pattern-bg, .water-particles-effect { display: none; }
+    </style>';
+}
+?>
+
 <div id="primary" class="content-area project-archive-page project-category-page">
     <main id="main" class="site-main project-archive-container" role="main">
         <!-- Hero Section with Water Effect -->
@@ -215,8 +229,16 @@ get_header(); ?>
 
 <script>
 jQuery(document).ready(function($) {
-    // Create water particles
+    // Limit the number of particles to prevent performance issues
+    var maxParticles = 20;
+    var activeParticles = 0;
+    
+    // Create water particles with improved performance
     function createWaterParticle() {
+        // Only create new particles if we're under the limit
+        if (activeParticles >= maxParticles) return;
+        
+        activeParticles++;
         var container = $('.particle-container');
         var containerWidth = container.width();
         var containerHeight = container.height();
@@ -247,11 +269,18 @@ jQuery(document).ready(function($) {
         // Remove particle after animation completes
         setTimeout(function() {
             particle.remove();
+            activeParticles--;
         }, 8000);
     }
     
-    // Create particles periodically
-    setInterval(createWaterParticle, 200);
+    // Create particles less frequently
+    setInterval(createWaterParticle, 500);
+    
+    // Check if SVG elements exist before applying effects
+    var svgExists = $('.water-pattern').length > 0;
+    if (!svgExists) {
+        $('.water-pattern-bg, .chemical-container, .splash-container').hide();
+    }
     
     // Hiệu ứng hover cho project card
     $('.project-card').hover(
