@@ -97,6 +97,11 @@ function nts_project_admin_scripts($hook) {
     // WordPress Media Uploader
     wp_enqueue_media();
     
+    // WordPress Editor Scripts
+    if (function_exists('wp_enqueue_editor')) {
+        wp_enqueue_editor();
+    }
+    
     // Đăng ký và enqueue JS
     wp_register_script('nts-project-admin-js', get_template_directory_uri() . '/assets/js/project-admin.js', array('jquery', 'jquery-ui-sortable'), '1.0.0', true);
     wp_enqueue_script('nts-project-admin-js');
@@ -189,13 +194,12 @@ function nts_project_details_callback($post) {
                             <?php 
                             wp_editor(
                                 $project_description, 
-                                'project_description', 
+                                'project_description',
                                 array(
+                                    'textarea_name' => 'project_description',
                                     'media_buttons' => true,
                                     'textarea_rows' => 8,
                                     'teeny'         => false,
-                                    'tinymce'       => true,
-                                    'quicktags'     => true,
                                 )
                             ); 
                             ?>
@@ -214,13 +218,12 @@ function nts_project_details_callback($post) {
                             <?php 
                             wp_editor(
                                 $project_challenges, 
-                                'project_challenges', 
+                                'project_challenges',
                                 array(
+                                    'textarea_name' => 'project_challenges',
                                     'media_buttons' => true,
                                     'textarea_rows' => 8,
                                     'teeny'         => false,
-                                    'tinymce'       => true,
-                                    'quicktags'     => true,
                                 )
                             ); 
                             ?>
@@ -239,13 +242,12 @@ function nts_project_details_callback($post) {
                             <?php 
                             wp_editor(
                                 $project_solutions, 
-                                'project_solutions', 
+                                'project_solutions',
                                 array(
+                                    'textarea_name' => 'project_solutions',
                                     'media_buttons' => true,
                                     'textarea_rows' => 8,
                                     'teeny'         => false,
-                                    'tinymce'       => true,
-                                    'quicktags'     => true,
                                 )
                             ); 
                             ?>
@@ -264,13 +266,12 @@ function nts_project_details_callback($post) {
                             <?php 
                             wp_editor(
                                 $project_results, 
-                                'project_results', 
+                                'project_results',
                                 array(
+                                    'textarea_name' => 'project_results',
                                     'media_buttons' => true,
                                     'textarea_rows' => 8,
                                     'teeny'         => false,
-                                    'tinymce'       => true,
-                                    'quicktags'     => true,
                                 )
                             ); 
                             ?>
@@ -550,23 +551,6 @@ function nts_create_project_admin_css() {
     background: #fff;
 }
 
-/* WordPress Editor Adjustments */
-.nts-tab-pane .wp-editor-wrap {
-    width: 100%;
-}
-
-.nts-tab-pane .wp-editor-tools {
-    background: #f8f9fa;
-}
-
-.nts-tab-pane .mce-toolbar .mce-btn button {
-    padding: 4px;
-}
-
-.nts-tab-pane .wp-switch-editor {
-    height: auto;
-}
-
 .nts-tab-pane {
     display: none;
 }
@@ -630,6 +614,30 @@ function nts_create_project_admin_css() {
     border-color: #0073aa;
     box-shadow: 0 0 0 1px #0073aa;
     outline: 2px solid transparent;
+}
+
+/* WYSIWYG Editor Styles */
+.nts-field-input .wp-editor-wrap {
+    margin-bottom: 10px;
+}
+
+.nts-field-input .wp-editor-container {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.nts-field-input .wp-editor-tools {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e2e4e7;
+}
+
+.nts-field-input .mce-toolbar .mce-btn button {
+    padding: 2px 3px;
+}
+
+.nts-field-input .wp-editor-area {
+    border: none !important;
 }
 
 .nts-field-desc {
@@ -886,6 +894,18 @@ jQuery(document).ready(function($) {
         
         $(this).addClass('tab-active');
         $('#' + tab_id).addClass('active');
+        
+        // Fix for TinyMCE editors in hidden tabs
+        if ($('#' + tab_id).find('.wp-editor-area').length > 0) {
+            $('#' + tab_id).find('.wp-editor-area').each(function() {
+                var editorId = $(this).attr('id');
+                if (typeof tinymce !== 'undefined' && tinymce.get(editorId)) {
+                    // Trigger a resize on the editor to fix any display issues
+                    tinymce.execCommand('mceRemoveEditor', false, editorId);
+                    tinymce.execCommand('mceAddEditor', false, editorId);
+                }
+            });
+        }
     });
     
     // Gallery image uploader
@@ -1081,7 +1101,7 @@ function nts_save_project_meta($post_id) {
         return;
     }
     
-    // Lưu dữ liệu details
+    // Lưu dữ liệu details - cho phép HTML từ WYSIWYG editor
     if (isset($_POST['project_description'])) {
         update_post_meta($post_id, 'project_description', wp_kses_post($_POST['project_description']));
     }
