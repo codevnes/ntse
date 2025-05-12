@@ -171,7 +171,7 @@ function nts_history_shortcode($atts)
                 <!-- Slider chính -->
                 <div class="swiper history-main-slider">
                     <div class="swiper-wrapper">
-                        <?php foreach ( $history_items as $item ) : ?>
+                        <?php foreach ( $history_items as $index => $item ) : ?>
                             <div class="swiper-slide history-main-slide">
                                 <div class="history-slide-content row">
                                     <div class="col large-4 medium-6 small-12">
@@ -180,15 +180,15 @@ function nts_history_shortcode($atts)
                                                 viewBox="0 0 665 688" fill="none">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                     d="M276.799 0.0019709C363.593 0.44379 418.944 83.4264 483.522 141.407C554.355 205.005 657.02 253.197 664.486 348.087C672.163 445.65 592.429 525.549 518.823 590.061C450.8 649.679 367.218 690.569 276.799 687.874C188.833 685.253 107.506 641.59 48.7859 576.053C-6.8162 513.996 -31.299 431.322 -27.6449 348.087C-24.1549 268.59 15.5686 199.194 67.9601 139.292C125.224 73.8189 189.807 -0.440852 276.799 0.0019709Z"
-                                                    fill="url(#pattern-0)"></path>
+                                                    fill="url(#pattern-<?php echo esc_attr($index); ?>)"></path>
                                                 <defs>
-                                                    <pattern id="pattern-0" patternContentUnits="objectBoundingBox" width="1"
+                                                    <pattern id="pattern-<?php echo esc_attr($index); ?>" patternContentUnits="objectBoundingBox" width="1"
                                                         height="1">
-                                                        <use xlink:href="#image-0"
+                                                        <use xlink:href="#image-<?php echo esc_attr($index); ?>"
                                                             transform="matrix(0.000676284 0 0 0.000681199 -0.198263 0)">
                                                         </use>
                                                     </pattern>
-                                                    <image id="image-0" width="2065" height="1468"
+                                                    <image id="image-<?php echo esc_attr($index); ?>" width="2065" height="1468"
                                                         xlink:href="<?php echo esc_url( $item['image'] ); ?>">
                                                     </image>
                                                 </defs>

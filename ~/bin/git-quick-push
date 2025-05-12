@@ -1,0 +1,13 @@
+#!/bin/bash
+# Git quick push script
+
+commit_message="$1"
+if [ -z "$commit_message" ]; then
+  commit_message="Update $(date)"
+fi
+
+git add .
+git commit -m "$commit_message"
+git push
+
+echo "✅ Pushed successfully with message: $commit_message" 
