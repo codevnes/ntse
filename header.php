@@ -276,6 +276,47 @@
             <div class="offcanvas-overlay"></div>
         </header><!-- #masthead -->
 
+        <style>
+            /* Offcanvas Submenu Styles */
+            .offcanvas-menu-items .menu-item-has-children > a {
+                position: relative;
+                padding-right: 30px;
+            }
+
+            .offcanvas-menu-items .menu-item-has-children > a::after {
+                content: '';
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid currentColor;
+                transition: transform 0.3s ease;
+            }
+
+            .offcanvas-menu-items .menu-item-has-children.submenu-open > a::after {
+                transform: translateY(-50%) rotate(180deg);
+            }
+
+            .offcanvas-menu-items .sub-menu {
+                display: none;
+                padding-left: 15px;
+                margin: 5px 0;
+            }
+
+            .offcanvas-menu-items .sub-menu a {
+                padding: 8px 15px;
+                font-size: 0.95em;
+                opacity: 0.9;
+            }
+
+            .offcanvas-menu-items .sub-menu a:hover {
+                opacity: 1;
+            }
+        </style>
         <script>
             // This script will be executed when the page loads
             jQuery(document).ready(function ($) {
@@ -380,6 +421,27 @@
 
                 // Run bubble animation
                 animateHeaderBubbles();
+
+                // Handle submenu toggling in offcanvas menu
+                $('.offcanvas-menu-items .menu-item-has-children > a').on('click', function(e) {
+                    e.preventDefault();
+                    const $submenu = $(this).next('.sub-menu');
+                    const $parent = $(this).parent();
+                    
+                    // Toggle submenu
+                    $submenu.slideToggle(300);
+                    $parent.toggleClass('submenu-open');
+                    
+                    // Close other submenus at the same level
+                    $parent.siblings('.menu-item-has-children').removeClass('submenu-open')
+                        .find('.sub-menu').slideUp(300);
+                });
+
+                // Close all submenus when closing offcanvas menu
+                $('.offcanvas-overlay, .offcanvas-close').on('click', function() {
+                    $('.offcanvas-menu-items .sub-menu').slideUp(300);
+                    $('.menu-item-has-children').removeClass('submenu-open');
+                });
             });
         </script>
 	<?php do_action( 'flatsome_after_header' ); ?>
