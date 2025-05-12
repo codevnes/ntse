@@ -274,17 +274,12 @@ function nts_history_shortcode($atts)
                         breakpoints: {
                             // Mobile
                             320: {
-                                slidesPerView: 3,
+                                slidesPerView: 2,
                                 spaceBetween: 15
                             },
-                            // Tablet
-                            640: {
-                                slidesPerView: 6,
-                                spaceBetween: 20
-                            },
-                            // Desktop
+                           
                             1024: {
-                                slidesPerView: 8,
+                                slidesPerView: 4,
                                 spaceBetween: 25
                             }
                         }
