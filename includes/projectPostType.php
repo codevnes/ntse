@@ -186,7 +186,19 @@ function nts_project_details_callback($post) {
                             <span class="label-text">Mô tả tổng quan dự án</span>
                         </label>
                         <div class="nts-field-input">
-                            <textarea id="project_description" name="project_description" class="large-text" rows="8"><?php echo esc_textarea($project_description); ?></textarea>
+                            <?php 
+                            wp_editor(
+                                $project_description, 
+                                'project_description', 
+                                array(
+                                    'media_buttons' => true,
+                                    'textarea_rows' => 8,
+                                    'teeny'         => false,
+                                    'tinymce'       => true,
+                                    'quicktags'     => true,
+                                )
+                            ); 
+                            ?>
                             <p class="nts-field-desc">Nhập mô tả tổng quan về dự án. Thông tin này sẽ hiển thị ở đầu trang chi tiết dự án.</p>
                         </div>
                     </div>
@@ -199,7 +211,19 @@ function nts_project_details_callback($post) {
                             <span class="label-text">Thách thức</span>
                         </label>
                         <div class="nts-field-input">
-                            <textarea id="project_challenges" name="project_challenges" class="large-text" rows="8"><?php echo esc_textarea($project_challenges); ?></textarea>
+                            <?php 
+                            wp_editor(
+                                $project_challenges, 
+                                'project_challenges', 
+                                array(
+                                    'media_buttons' => true,
+                                    'textarea_rows' => 8,
+                                    'teeny'         => false,
+                                    'tinymce'       => true,
+                                    'quicktags'     => true,
+                                )
+                            ); 
+                            ?>
                             <p class="nts-field-desc">Mô tả những thách thức cần giải quyết trong dự án này.</p>
                         </div>
                     </div>
@@ -212,7 +236,19 @@ function nts_project_details_callback($post) {
                             <span class="label-text">Giải pháp</span>
                         </label>
                         <div class="nts-field-input">
-                            <textarea id="project_solutions" name="project_solutions" class="large-text" rows="8"><?php echo esc_textarea($project_solutions); ?></textarea>
+                            <?php 
+                            wp_editor(
+                                $project_solutions, 
+                                'project_solutions', 
+                                array(
+                                    'media_buttons' => true,
+                                    'textarea_rows' => 8,
+                                    'teeny'         => false,
+                                    'tinymce'       => true,
+                                    'quicktags'     => true,
+                                )
+                            ); 
+                            ?>
                             <p class="nts-field-desc">Mô tả các giải pháp đã triển khai để giải quyết thách thức.</p>
                         </div>
                     </div>
@@ -225,7 +261,19 @@ function nts_project_details_callback($post) {
                             <span class="label-text">Kết quả</span>
                         </label>
                         <div class="nts-field-input">
-                            <textarea id="project_results" name="project_results" class="large-text" rows="8"><?php echo esc_textarea($project_results); ?></textarea>
+                            <?php 
+                            wp_editor(
+                                $project_results, 
+                                'project_results', 
+                                array(
+                                    'media_buttons' => true,
+                                    'textarea_rows' => 8,
+                                    'teeny'         => false,
+                                    'tinymce'       => true,
+                                    'quicktags'     => true,
+                                )
+                            ); 
+                            ?>
                             <p class="nts-field-desc">Mô tả kết quả đạt được sau khi triển khai dự án.</p>
                         </div>
                     </div>
@@ -500,6 +548,23 @@ function nts_create_project_admin_css() {
 .nts-tab-content {
     padding: 20px;
     background: #fff;
+}
+
+/* WordPress Editor Adjustments */
+.nts-tab-pane .wp-editor-wrap {
+    width: 100%;
+}
+
+.nts-tab-pane .wp-editor-tools {
+    background: #f8f9fa;
+}
+
+.nts-tab-pane .mce-toolbar .mce-btn button {
+    padding: 4px;
+}
+
+.nts-tab-pane .wp-switch-editor {
+    height: auto;
 }
 
 .nts-tab-pane {
