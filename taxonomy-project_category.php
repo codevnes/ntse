@@ -9,54 +9,28 @@ get_header(); ?>
 
 <div id="primary" class="content-area project-archive-page project-category-page">
     <main id="main" class="site-main project-archive-container" role="main">
-        <!-- Hero Section with Water Effect -->
-        <header class="project-archive-header nts-page-header water-effect-header" data-animate="fadeInUp">
-            <div class="water-bg" style="background-color: #005b9f; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
+        <!-- Header Section with Simplified Water Effect -->
+        <header class="project-archive-header">
+            <!-- Static background layer -->
+            <div class="header-bg-layer"></div>
             
-            <!-- Simplified water pattern background -->
-            <div class="water-pattern-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; opacity: 0.6;">
+            <!-- Simple water pattern overlay -->
+            <div class="header-pattern-layer">
                 <svg width="100%" height="100%" preserveAspectRatio="none">
-                    <use xlink:href="#water-pattern-bg" class="water-pattern"></use>
+                    <use xlink:href="#water-pattern-bg"></use>
                 </svg>
             </div>
             
-            <!-- Reduced chemical element -->
-            <div class="chemical-container" style="opacity: 0.5; position: relative; z-index: 3;">
-                <svg class="chemical-molecules-svg" width="80" height="80">
-                    <use xlink:href="#chemical-molecules"></use>
-                </svg>
+            <!-- Limited decorative elements -->
+            <div class="header-decoration">
+                <div class="header-bubble bubble-1"></div>
+                <div class="header-bubble bubble-2"></div>
+                <div class="header-bubble bubble-3"></div>
             </div>
             
-            <!-- Simplified particles -->
-            <div class="water-particles-effect" style="position: relative; z-index: 3;">
-                <div class="particle-container"></div>
-            </div>
-            
-            <!-- Reduced bubbles -->
-            <div class="bubbles-container" style="position: relative; z-index: 3;">
-                <div class="bubble bubble-1"></div>
-                <div class="bubble bubble-2"></div>
-                <div class="bubble bubble-3"></div>
-                <div class="bubble bubble-4"></div>
-                <!-- Removed excess bubbles -->
-                
-                <!-- Simplified splash -->
-                <div class="splash-container">
-                    <svg class="water-splash-svg" width="60" height="60">
-                        <use xlink:href="#water-splash"></use>
-                    </svg>
-                </div>
-            </div>
-            
-            <div class="container" style="position: relative; z-index: 10;">
-                <div class="project-header-content service-header-content" style="position: relative; z-index: 10;">
-                    <!-- Simplified droplet icon -->
-                    <div class="animated-droplet-icon">
-                        <svg width="40" height="60">
-                            <use xlink:href="#animated-water-drop"></use>
-                        </svg>
-                    </div>
-                    
+            <!-- Content container with improved z-index -->
+            <div class="container">
+                <div class="header-content">
                     <?php
                     $term = get_queried_object();
                     ?>
@@ -67,19 +41,19 @@ get_header(); ?>
                         <span><?php echo esc_html($term->name); ?></span>
                     </div>
                     
-                    <h1 class="page-title" style="color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5);"><?php echo esc_html($term->name); ?></h1>
+                    <h1 class="page-title"><?php echo esc_html($term->name); ?></h1>
                     
                     <?php if (!empty($term->description)) : ?>
-                        <p class="page-description" style="color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5);"><?php echo esc_html($term->description); ?></p>
+                        <p class="page-description"><?php echo esc_html($term->description); ?></p>
                     <?php else : ?>
-                        <p class="page-description" style="color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">Khám phá các dự án <?php echo esc_html(strtolower($term->name)); ?> tiêu biểu của chúng tôi với công nghệ tiên tiến và giải pháp hiệu quả. Mỗi dự án là minh chứng cho cam kết mang đến nguồn nước sạch, an toàn và bền vững.</p>
+                        <p class="page-description">Khám phá các dự án <?php echo esc_html(strtolower($term->name)); ?> tiêu biểu của chúng tôi với công nghệ tiên tiến và giải pháp hiệu quả. Mỗi dự án là minh chứng cho cam kết mang đến nguồn nước sạch, an toàn và bền vững.</p>
                     <?php endif; ?>
                     
                     <!-- Category Stats -->
                     <div class="category-stats">
                         <div class="stat-item">
-                            <div class="stat-number" style="color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5);"><?php echo esc_html($wp_query->found_posts); ?></div>
-                            <div class="stat-label" style="color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">Dự án</div>
+                            <div class="stat-number"><?php echo esc_html($wp_query->found_posts); ?></div>
+                            <div class="stat-label">Dự án</div>
                         </div>
                     </div>
                 </div>
@@ -345,6 +319,226 @@ jQuery(document).ready(function($) {
     );
 });
 </script>
+
+<style>
+/* Project Archive Header Styles */
+.project-archive-header {
+    position: relative;
+    padding: 80px 0 60px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+/* Background layers */
+.header-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0b5394 0%, #0073a8 50%, #00a0c6 100%);
+    z-index: 1;
+}
+
+.header-pattern-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+    z-index: 2;
+}
+
+/* Header decorations */
+.header-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.header-bubble {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    animation: bubbleFloat 10s infinite ease-in-out;
+}
+
+.header-bubble.bubble-1 {
+    width: 50px;
+    height: 50px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.header-bubble.bubble-2 {
+    width: 35px;
+    height: 35px;
+    top: 30%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.header-bubble.bubble-3 {
+    width: 25px;
+    height: 25px;
+    bottom: 25%;
+    right: 30%;
+    animation-delay: 1s;
+}
+
+@keyframes bubbleFloat {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+    }
+    25% {
+        transform: translateY(-15px) translateX(10px);
+    }
+    50% {
+        transform: translateY(8px) translateX(-8px);
+    }
+    75% {
+        transform: translateY(12px) translateX(5px);
+    }
+}
+
+/* Header content */
+.header-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #fff;
+}
+
+.category-breadcrumb {
+    margin-bottom: 20px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.category-breadcrumb a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.category-breadcrumb a:hover {
+    color: #fff;
+}
+
+.category-breadcrumb i {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+}
+
+.page-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: inline-block;
+}
+
+.page-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 2px;
+}
+
+.page-description {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.category-stats {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.category-stats .stat-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.category-stats .stat-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.category-stats .stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.category-stats .stat-label {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .project-archive-header {
+        padding: 60px 0 40px;
+    }
+    
+    .page-title {
+        font-size: 32px;
+    }
+    
+    .page-description {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .project-archive-header {
+        padding: 40px 0 30px;
+    }
+    
+    .page-title {
+        font-size: 28px;
+    }
+    
+    .category-stats .stat-item {
+        padding: 10px 20px;
+    }
+    
+    .category-stats .stat-number {
+        font-size: 28px;
+    }
+}
+</style>
 
 <?php
 get_footer();
