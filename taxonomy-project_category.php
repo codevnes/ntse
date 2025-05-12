@@ -11,29 +11,29 @@ get_header(); ?>
     <main id="main" class="site-main project-archive-container" role="main">
         <!-- Hero Section with Water Effect -->
         <header class="project-archive-header nts-page-header water-effect-header" data-animate="fadeInUp">
-            <div class="water-bg"></div>
+            <div class="water-bg" style="background-color: #005b9f; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
             
             <!-- Simplified water pattern background -->
-            <div class="water-pattern-bg">
+            <div class="water-pattern-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; opacity: 0.6;">
                 <svg width="100%" height="100%" preserveAspectRatio="none">
                     <use xlink:href="#water-pattern-bg" class="water-pattern"></use>
                 </svg>
             </div>
             
             <!-- Reduced chemical element -->
-            <div class="chemical-container" style="opacity: 0.5;">
+            <div class="chemical-container" style="opacity: 0.5; position: relative; z-index: 3;">
                 <svg class="chemical-molecules-svg" width="80" height="80">
                     <use xlink:href="#chemical-molecules"></use>
                 </svg>
             </div>
             
             <!-- Simplified particles -->
-            <div class="water-particles-effect">
+            <div class="water-particles-effect" style="position: relative; z-index: 3;">
                 <div class="particle-container"></div>
             </div>
             
             <!-- Reduced bubbles -->
-            <div class="bubbles-container">
+            <div class="bubbles-container" style="position: relative; z-index: 3;">
                 <div class="bubble bubble-1"></div>
                 <div class="bubble bubble-2"></div>
                 <div class="bubble bubble-3"></div>
@@ -48,7 +48,7 @@ get_header(); ?>
                 </div>
             </div>
             
-            <div class="container">
+            <div class="container" style="position: relative; z-index: 10;">
                 <div class="project-header-content service-header-content" style="position: relative; z-index: 10;">
                     <!-- Simplified droplet icon -->
                     <div class="animated-droplet-icon">
