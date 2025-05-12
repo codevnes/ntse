@@ -70,7 +70,7 @@ function nts_floating_contact_shortcode($atts) {
     <style>
         .nts-floating-contact {
             position: fixed;
-            bottom: 20px;
+            bottom: 120px;
             z-index: 999;
             display: flex;
             flex-direction: column;
