@@ -235,13 +235,12 @@ function nts_history_shortcode($atts)
                                         <div class="thumb-logo">
                                             <img src="<?php echo esc_url( $logo_url ); ?>" alt="Logo">
                                         </div>
-
-
                                     <?php endif;
                                 endif; ?>
                             </div>
                         <?php endforeach; ?>
                     </div>
+                    <div class="progress-line" style="background-color: <?php echo esc_attr( $atts['primary_color'] ); ?>"></div>
                 </div>
             </div>
 
@@ -312,10 +311,17 @@ function nts_history_shortcode($atts)
 
                                 // Cập nhật đường line tiến trình
                                 updateProgressLine(historyMain.activeIndex, historyMain.slides.length);
+                                
+                                // Force refresh image transition
+                                $('.history-main-slide').css('opacity', 0);
+                                $('.history-main-slide').eq(historyMain.activeIndex).css('opacity', 1);
                             },
                             init: function () {
                                 // Khởi tạo đường line tiến trình
                                 updateProgressLine(0, historyMain.slides.length);
+                                
+                                // Ensure first slide is visible
+                                $('.history-main-slide').eq(0).css('opacity', 1);
                             }
                         }
                     });
@@ -549,6 +555,17 @@ function nts_history_shortcode($atts)
             z-index: 1;
         }
 
+        /* Progress line styling */
+        .history-thumb-slider .progress-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background-color: <?php echo esc_attr( $atts['primary_color'] ); ?>;
+            z-index: 2;
+            transition: width 0.3s ease;
+        }
 
         .history-thumb {
             height: 80px;
@@ -631,6 +648,19 @@ function nts_history_shortcode($atts)
 
         /* Fade effect */
         .history-main-slider .swiper-slide {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .history-main-slider .swiper-slide-active {
+            opacity: 1;
+        }
+
+        /* Fix for SVG image transitions */
+        .history-main-slide svg {
+            width: 100%;
+            height: auto;
+            will-change: opacity;
             transition: opacity 0.3s ease;
         }
 
