@@ -310,41 +310,7 @@ function nts_product_hero_callback($post) {
         </div>
     </div>
 
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        // Media Uploader for Hero Image
-        $('#upload_hero_image_button').click(function() {
-            var image_frame;
-            if (image_frame) {
-                image_frame.open();
-                return;
-            }
-
-            image_frame = wp.media({
-                title: '<?php _e("Chọn hoặc tải lên hình ảnh", "flatsome"); ?>',
-                button: {
-                    text: '<?php _e("Sử dụng hình ảnh này", "flatsome"); ?>',
-                },
-                multiple: false
-            });
-
-            image_frame.on('select', function() {
-                var attachment = image_frame.state().get('selection').first().toJSON();
-                $('#hero_image_id').val(attachment.id);
-                $('#hero_image_preview').html('<img src="' + attachment.url + '" alt="" style="max-width:100%;">');
-                $('#remove_hero_image_button').show();
-            });
-
-            image_frame.open();
-        });
-
-        $('#remove_hero_image_button').click(function() {
-            $('#hero_image_id').val('');
-            $('#hero_image_preview').html('');
-            $(this).hide();
-        });
-    });
-    </script>
+    <!-- JavaScript code moved to admin.js -->
     <?php
 }
 
@@ -415,41 +381,7 @@ function nts_product_introduction_callback($post) {
         </div>
     </div>
 
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        // Media Uploader for Introduction Image
-        $('#upload_introduction_image_button').click(function() {
-            var image_frame;
-            if (image_frame) {
-                image_frame.open();
-                return;
-            }
-
-            image_frame = wp.media({
-                title: '<?php _e("Chọn hoặc tải lên hình ảnh", "flatsome"); ?>',
-                button: {
-                    text: '<?php _e("Sử dụng hình ảnh này", "flatsome"); ?>',
-                },
-                multiple: false
-            });
-
-            image_frame.on('select', function() {
-                var attachment = image_frame.state().get('selection').first().toJSON();
-                $('#introduction_image_id').val(attachment.id);
-                $('#introduction_image_preview').html('<img src="' + attachment.url + '" alt="" style="max-width:100%;">');
-                $('#remove_introduction_image_button').show();
-            });
-
-            image_frame.open();
-        });
-
-        $('#remove_introduction_image_button').click(function() {
-            $('#introduction_image_id').val('');
-            $('#introduction_image_preview').html('');
-            $(this).hide();
-        });
-    });
-    </script>
+    <!-- JavaScript code moved to admin.js -->
     <?php
 }
 
@@ -697,48 +629,7 @@ function nts_product_reviews_callback($post) {
             <button type="button" class="button button-primary" id="add-review"><?php _e('Thêm đánh giá mới', 'flatsome'); ?></button>
         </div>
 
-        <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            // Thêm đánh giá mới
-            $('#add-review').on('click', function() {
-                var container = $('#reviews-container');
-                var template = $('.review-template').html();
-                var index = container.find('.review-item').length;
-
-                // Thay thế INDEX với index thực tế
-                template = template.replace(/INDEX/g, index);
-
-                // Thêm vào container
-                container.append(template);
-
-                // Cập nhật số đánh giá
-                container.find('.review-item:last .review-number').text(index + 1);
-                container.find('.review-item:last').attr('data-index', index);
-            });
-
-            // Xóa đánh giá
-            $(document).on('click', '.remove-review', function() {
-                if (confirm('<?php _e("Bạn có chắc chắn muốn xóa đánh giá này?", "flatsome"); ?>')) {
-                    $(this).closest('.review-item').remove();
-
-                    // Cập nhật lại các index
-                    $('#reviews-container .review-item').each(function(i) {
-                        $(this).attr('data-index', i);
-                        $(this).find('.review-number').text(i + 1);
-
-                        // Cập nhật tên trường
-                        $(this).find('textarea, input').each(function() {
-                            var name = $(this).attr('name');
-                            if (name) {
-                                name = name.replace(/product_reviews\[\d+\]/, 'product_reviews[' + i + ']');
-                                $(this).attr('name', name);
-                            }
-                        });
-                    });
-                }
-            });
-        });
-        </script>
+        <!-- JavaScript code moved to admin.js -->
     </div>
     <?php
 }
@@ -841,48 +732,7 @@ function nts_product_faq_callback($post) {
             <button type="button" class="button button-primary" id="add-faq"><?php _e('Thêm câu hỏi mới', 'flatsome'); ?></button>
         </div>
 
-        <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            // Thêm câu hỏi mới
-            $('#add-faq').on('click', function() {
-                var container = $('#faqs-container');
-                var template = $('.faq-template').html();
-                var index = container.find('.faq-item').length;
-
-                // Thay thế INDEX với index thực tế
-                template = template.replace(/INDEX/g, index);
-
-                // Thêm vào container
-                container.append(template);
-
-                // Cập nhật số câu hỏi
-                container.find('.faq-item:last .faq-number').text(index + 1);
-                container.find('.faq-item:last').attr('data-index', index);
-            });
-
-            // Xóa câu hỏi
-            $(document).on('click', '.remove-faq', function() {
-                if (confirm('<?php _e("Bạn có chắc chắn muốn xóa câu hỏi này?", "flatsome"); ?>')) {
-                    $(this).closest('.faq-item').remove();
-
-                    // Cập nhật lại các index
-                    $('#faqs-container .faq-item').each(function(i) {
-                        $(this).attr('data-index', i);
-                        $(this).find('.faq-number').text(i + 1);
-
-                        // Cập nhật tên trường
-                        $(this).find('textarea, input').each(function() {
-                            var name = $(this).attr('name');
-                            if (name) {
-                                name = name.replace(/product_faqs\[\d+\]/, 'product_faqs[' + i + ']');
-                                $(this).attr('name', name);
-                            }
-                        });
-                    });
-                }
-            });
-        });
-        </script>
+        <!-- JavaScript code moved to admin.js -->
     </div>
     <?php
 }

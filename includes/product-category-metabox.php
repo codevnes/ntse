@@ -61,73 +61,7 @@ function ntse_product_category_add_form_fields() {
         </div>
     </div>
 
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        // Media Uploader for Thumbnail
-        $('#product_category_thumbnail_upload_button').click(function() {
-            var image_frame;
-            if (image_frame) {
-                image_frame.open();
-                return;
-            }
-
-            image_frame = wp.media({
-                title: '<?php _e("Chọn hoặc tải lên hình ảnh", "flatsome"); ?>',
-                button: {
-                    text: '<?php _e("Sử dụng hình ảnh này", "flatsome"); ?>',
-                },
-                multiple: false
-            });
-
-            image_frame.on('select', function() {
-                var attachment = image_frame.state().get('selection').first().toJSON();
-                $('#product_category_thumbnail_id').val(attachment.id);
-                $('#product_category_thumbnail_preview').attr('src', attachment.url).show();
-                $('#product_category_thumbnail_remove_button').show();
-            });
-
-            image_frame.open();
-        });
-
-        $('#product_category_thumbnail_remove_button').click(function() {
-            $('#product_category_thumbnail_id').val('');
-            $('#product_category_thumbnail_preview').attr('src', '').hide();
-            $(this).hide();
-        });
-
-        // Media Uploader for Intro Image
-        $('#product_category_intro_image_upload_button').click(function() {
-            var image_frame;
-            if (image_frame) {
-                image_frame.open();
-                return;
-            }
-
-            image_frame = wp.media({
-                title: '<?php _e("Chọn hoặc tải lên hình ảnh", "flatsome"); ?>',
-                button: {
-                    text: '<?php _e("Sử dụng hình ảnh này", "flatsome"); ?>',
-                },
-                multiple: false
-            });
-
-            image_frame.on('select', function() {
-                var attachment = image_frame.state().get('selection').first().toJSON();
-                $('#product_category_intro_image_id').val(attachment.id);
-                $('#product_category_intro_image_preview').attr('src', attachment.url).show();
-                $('#product_category_intro_image_remove_button').show();
-            });
-
-            image_frame.open();
-        });
-
-        $('#product_category_intro_image_remove_button').click(function() {
-            $('#product_category_intro_image_id').val('');
-            $('#product_category_intro_image_preview').attr('src', '').hide();
-            $(this).hide();
-        });
-    });
-    </script>
+    <!-- JavaScript code moved to admin.js -->
     <?php
 }
 add_action('product_category_add_form_fields', 'ntse_product_category_add_form_fields');
@@ -230,73 +164,7 @@ function ntse_product_category_edit_form_fields($term) {
         </td>
     </tr>
 
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        // Media Uploader for Thumbnail
-        $('#product_category_thumbnail_upload_button').click(function() {
-            var image_frame;
-            if (image_frame) {
-                image_frame.open();
-                return;
-            }
-
-            image_frame = wp.media({
-                title: '<?php _e("Chọn hoặc tải lên hình ảnh", "flatsome"); ?>',
-                button: {
-                    text: '<?php _e("Sử dụng hình ảnh này", "flatsome"); ?>',
-                },
-                multiple: false
-            });
-
-            image_frame.on('select', function() {
-                var attachment = image_frame.state().get('selection').first().toJSON();
-                $('#product_category_thumbnail_id').val(attachment.id);
-                $('#product_category_thumbnail_preview').attr('src', attachment.url).show();
-                $('#product_category_thumbnail_remove_button').show();
-            });
-
-            image_frame.open();
-        });
-
-        $('#product_category_thumbnail_remove_button').click(function() {
-            $('#product_category_thumbnail_id').val('');
-            $('#product_category_thumbnail_preview').attr('src', '').hide();
-            $(this).hide();
-        });
-
-        // Media Uploader for Intro Image
-        $('#product_category_intro_image_upload_button').click(function() {
-            var image_frame;
-            if (image_frame) {
-                image_frame.open();
-                return;
-            }
-
-            image_frame = wp.media({
-                title: '<?php _e("Chọn hoặc tải lên hình ảnh", "flatsome"); ?>',
-                button: {
-                    text: '<?php _e("Sử dụng hình ảnh này", "flatsome"); ?>',
-                },
-                multiple: false
-            });
-
-            image_frame.on('select', function() {
-                var attachment = image_frame.state().get('selection').first().toJSON();
-                $('#product_category_intro_image_id').val(attachment.id);
-                $('#product_category_intro_image_preview').attr('src', attachment.url).show();
-                $('#product_category_intro_image_remove_button').show();
-            });
-
-            image_frame.open();
-        });
-
-        $('#product_category_intro_image_remove_button').click(function() {
-            $('#product_category_intro_image_id').val('');
-            $('#product_category_intro_image_preview').attr('src', '').hide();
-            $(this).hide();
-        });
-    });
-    </script>
+    <!-- JavaScript code moved to admin.js -->
     <?php
 }
 add_action('product_category_edit_form_fields', 'ntse_product_category_edit_form_fields');
