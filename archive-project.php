@@ -11,7 +11,7 @@ get_header(); ?>
     <main id="main" class="site-main project-archive-container" role="main">
         <!-- Hero Section with Water Effect -->
         <header class="project-archive-header nts-page-header water-effect-header" data-animate="fadeInUp">
-            <div class="water-bg"></div>
+            <div class="water-bg" style="background-color: #0078AA;"></div>
 
             <!-- Thêm mẫu nước nền -->
             <div class="water-pattern-bg">
@@ -105,7 +105,7 @@ get_header(); ?>
             <!-- Wave Decoration -->
             <div class="wave-decoration">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                    <path fill="#ffffff" fill-opacity="1" d="M0,192L48,176C96,160,192,128,288,122.7C384,117,480,139,576,149.3C672,160,768,160,864,138.7C960,117,1056,75,1152,69.3C1248,64,1344,96,1392,112L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                    <path fill="#f0f8ff" fill-opacity="0.8" d="M0,192L48,176C96,160,192,128,288,122.7C384,117,480,139,576,149.3C672,160,768,160,864,138.7C960,117,1056,75,1152,69.3C1248,64,1344,96,1392,112L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
                 </svg>
             </div>
         </header><!-- .page-header -->
