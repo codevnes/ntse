@@ -413,7 +413,205 @@ get_header(); ?>
     </main><!-- #main -->
 </div><!-- #primary -->
 
-<!-- JavaScript code moved to consolidated.js -->
+<script>
+jQuery(document).ready(function($) {
+    // Create water particles with limits
+    var particleLimit = 0;
+    var maxParticles = 20; // Limit maximum number of particles
+    
+    function createWaterParticle() {
+        // Only create particle if under limit
+        if (particleLimit < maxParticles) {
+            var container = $('.particle-container');
+            var containerWidth = container.width();
+            var containerHeight = container.height();
+
+            // Random size - reduced range
+            var size = Math.floor(Math.random() * 4) + 2; // 2px to 6px
+
+            // Random position
+            var posX = Math.floor(Math.random() * containerWidth);
+            var posY = Math.floor(Math.random() * (containerHeight / 3)) + (containerHeight * 2/3);
+
+            // Create particle element
+            var particle = $('<div class="water-particle"></div>');
+            particle.css({
+                width: size + 'px',
+                height: size + 'px',
+                left: posX + 'px',
+                top: posY + 'px',
+                opacity: Math.random() * 0.5 + 0.2
+            });
+
+            // Add to container
+            container.append(particle);
+            particleLimit++;
+
+            // Add class to activate animation
+            particle.addClass('particle-animate');
+
+            // Remove particle after animation completes
+            setTimeout(function() {
+                particle.remove();
+                particleLimit--;
+            }, 8000);
+        }
+    }
+
+    // Create particles less frequently
+    var particleInterval = setInterval(createWaterParticle, 500);
+    
+    // Stop creating particles when page not visible
+    $(window).on('blur', function() {
+        clearInterval(particleInterval);
+    });
+    
+    // Resume when page is visible
+    $(window).on('focus', function() {
+        particleInterval = setInterval(createWaterParticle, 500);
+    });
+
+    // Optimize hover effects
+    $('.project-card').on('mouseenter', function() {
+        $(this).find('.project-item-overlay').css('opacity', 1);
+    }).on('mouseleave', function() {
+        $(this).find('.project-item-overlay').css('opacity', 0);
+    });
+
+    // Optimize card animations
+    function animateProjectCards() {
+        $('.project-card').each(function(index) {
+            var card = $(this);
+            setTimeout(function() {
+                card.addClass('animated-in');
+            }, 100 * Math.min(index, 10)); // Cap animation delay
+        });
+    }
+
+    // Only run animations if preferred
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setTimeout(animateProjectCards, 500);
+        
+        // Simplified floating animation
+        setTimeout(function() {
+            $('.service-header-content').addClass('float-animation');
+        }, 1000);
+    }
+
+    // Optimize ripple effect
+    var rippleTimeout;
+    $(document).on('click', '.btn-water-ripple', function(e) {
+        var btn = $(this);
+        var btnOffset = btn.offset();
+        var xPos = e.pageX - btnOffset.left;
+        var yPos = e.pageY - btnOffset.top;
+
+        // Remove any existing ripples
+        btn.find('.ripple-effect').remove();
+
+        var ripple = $('<span class="ripple-effect"></span>');
+        ripple.css({
+            width: btn.width(),
+            height: btn.width(),
+            top: yPos - (btn.width()/2),
+            left: xPos - (btn.width()/2)
+        });
+
+        btn.append(ripple);
+
+        clearTimeout(rippleTimeout);
+        rippleTimeout = setTimeout(function() {
+            ripple.remove();
+        }, 600);
+    });
+
+    // Lightweight 3D hover effect
+    var isHovering = false;
+    $('.project-card').on('mouseenter', function() {
+        isHovering = true;
+    }).on('mouseleave', function() {
+        isHovering = false;
+        $(this).css('transform', 'none');
+    }).on('mousemove', function(e) {
+        if (!isHovering) return;
+        
+        var card = $(this);
+        var cardRect = card[0].getBoundingClientRect();
+        var cardWidth = cardRect.width;
+        var cardHeight = cardRect.height;
+        
+        var mouseX = e.clientX - cardRect.left;
+        var mouseY = e.clientY - cardRect.top;
+        
+        var rotateY = ((mouseX / cardWidth) - 0.5) * 4;
+        var rotateX = ((mouseY / cardHeight) - 0.5) * -4;
+        
+        card.css('transform', 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.01, 1.01, 1.01)');
+    });
+
+    // Simple hover for category card
+    $('.category-card').on('mouseenter', function() {
+        $(this).find('.category-overlay').css('opacity', 0.3);
+    }).on('mouseleave', function() {
+        $(this).find('.category-overlay').css('opacity', 0);
+    });
+
+    // Toggle between grid and list views
+    $('.view-button').on('click', function() {
+        var viewMode = $(this).data('view');
+        $('.view-button').removeClass('active');
+        $(this).addClass('active');
+        
+        if (viewMode === 'grid') {
+            $('#project-grid').show();
+            $('#project-list').hide();
+        } else {
+            $('#project-grid').hide();
+            $('#project-list').show();
+        }
+    });
+
+    // Filter dropdown
+    $('.filter-button').on('click', function() {
+        $('.filter-dropdown-content').toggleClass('show');
+    });
+
+    // Close dropdown when clicking elsewhere
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.filter-dropdown').length) {
+            $('.filter-dropdown-content').removeClass('show');
+        }
+    });
+
+    // Smooth scroll with optimized animation
+    $('.scroll-down-indicator').on('click', function() {
+        $('html, body').animate({
+            scrollTop: $('.project-categories-section').offset().top - 20
+        }, 600); // Faster animation
+    });
+
+    // Initialize slider only if needed
+    if ($('.featured-projects-slider').length) {
+        // Add a small delay to load slider after critical content
+        setTimeout(function() {
+            $('.featured-projects-slider').slick({
+                dots: true,
+                arrows: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 5000,
+                adaptiveHeight: true,
+                lazyLoad: 'ondemand', // Add lazy loading
+                prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-chevron-left"></i></button>',
+                nextArrow: '<button type="button" class="slick-next"><i class="fa fa-chevron-right"></i></button>'
+            });
+        }, 300);
+    }
+});
+</script>
 
 <?php
 get_footer();
