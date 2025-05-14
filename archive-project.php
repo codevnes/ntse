@@ -415,81 +415,99 @@ get_header(); ?>
 
 <script>
 jQuery(document).ready(function($) {
-    // Create water particles
+    // Create water particles with limits
+    var particleLimit = 0;
+    var maxParticles = 20; // Limit maximum number of particles
+    
     function createWaterParticle() {
-        var container = $('.particle-container');
-        var containerWidth = container.width();
-        var containerHeight = container.height();
+        // Only create particle if under limit
+        if (particleLimit < maxParticles) {
+            var container = $('.particle-container');
+            var containerWidth = container.width();
+            var containerHeight = container.height();
 
-        // Random size
-        var size = Math.floor(Math.random() * 6) + 2; // 2px to 8px
+            // Random size - reduced range
+            var size = Math.floor(Math.random() * 4) + 2; // 2px to 6px
 
-        // Random position
-        var posX = Math.floor(Math.random() * containerWidth);
-        var posY = Math.floor(Math.random() * (containerHeight / 3)) + (containerHeight * 2/3); // Only in bottom 1/3
+            // Random position
+            var posX = Math.floor(Math.random() * containerWidth);
+            var posY = Math.floor(Math.random() * (containerHeight / 3)) + (containerHeight * 2/3);
 
-        // Create particle element
-        var particle = $('<div class="water-particle"></div>');
-        particle.css({
-            width: size + 'px',
-            height: size + 'px',
-            left: posX + 'px',
-            top: posY + 'px',
-            opacity: Math.random() * 0.5 + 0.2
-        });
+            // Create particle element
+            var particle = $('<div class="water-particle"></div>');
+            particle.css({
+                width: size + 'px',
+                height: size + 'px',
+                left: posX + 'px',
+                top: posY + 'px',
+                opacity: Math.random() * 0.5 + 0.2
+            });
 
-        // Add to container
-        container.append(particle);
+            // Add to container
+            container.append(particle);
+            particleLimit++;
 
-        // Add class to activate animation
-        particle.addClass('particle-animate');
+            // Add class to activate animation
+            particle.addClass('particle-animate');
 
-        // Remove particle after animation completes
-        setTimeout(function() {
-            particle.remove();
-        }, 8000);
+            // Remove particle after animation completes
+            setTimeout(function() {
+                particle.remove();
+                particleLimit--;
+            }, 8000);
+        }
     }
 
-    // Create particles periodically
-    setInterval(createWaterParticle, 200);
+    // Create particles less frequently
+    var particleInterval = setInterval(createWaterParticle, 500);
+    
+    // Stop creating particles when page not visible
+    $(window).on('blur', function() {
+        clearInterval(particleInterval);
+    });
+    
+    // Resume when page is visible
+    $(window).on('focus', function() {
+        particleInterval = setInterval(createWaterParticle, 500);
+    });
 
-    // Hiệu ứng hover cho project card
-    $('.project-card').hover(
-        function() {
-            $(this).find('.project-item-overlay').css('opacity', 1);
-        },
-        function() {
-            $(this).find('.project-item-overlay').css('opacity', 0);
-        }
-    );
+    // Optimize hover effects
+    $('.project-card').on('mouseenter', function() {
+        $(this).find('.project-item-overlay').css('opacity', 1);
+    }).on('mouseleave', function() {
+        $(this).find('.project-item-overlay').css('opacity', 0);
+    });
 
-    // Hiệu ứng xuất hiện tuần tự cho các thẻ dự án
+    // Optimize card animations
     function animateProjectCards() {
         $('.project-card').each(function(index) {
             var card = $(this);
             setTimeout(function() {
                 card.addClass('animated-in');
-            }, 150 * index);
+            }, 100 * Math.min(index, 10)); // Cap animation delay
         });
     }
 
-    // Chạy animation khi trang tải xong
-    setTimeout(animateProjectCards, 500);
-
-    // Thêm hiệu ứng floating cho title
-    function floatingAnimation() {
-        $('.service-header-content').addClass('float-animation');
+    // Only run animations if preferred
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setTimeout(animateProjectCards, 500);
+        
+        // Simplified floating animation
+        setTimeout(function() {
+            $('.service-header-content').addClass('float-animation');
+        }, 1000);
     }
 
-    // Chạy animation floating
-    setTimeout(floatingAnimation, 1000);
-
-    // Hiệu ứng ripple khi click vào nút
+    // Optimize ripple effect
+    var rippleTimeout;
     $(document).on('click', '.btn-water-ripple', function(e) {
         var btn = $(this);
         var btnOffset = btn.offset();
         var xPos = e.pageX - btnOffset.left;
         var yPos = e.pageY - btnOffset.top;
+
+        // Remove any existing ripples
+        btn.find('.ripple-effect').remove();
 
         var ripple = $('<span class="ripple-effect"></span>');
         ripple.css({
@@ -501,54 +519,49 @@ jQuery(document).ready(function($) {
 
         btn.append(ripple);
 
-        setTimeout(function() {
+        clearTimeout(rippleTimeout);
+        rippleTimeout = setTimeout(function() {
             ripple.remove();
         }, 600);
     });
 
-    // Hiệu ứng hover 3D cho project card
-    $('.project-card').on('mousemove', function(e) {
-        const card = $(this);
-        const cardRect = card[0].getBoundingClientRect();
-        const cardWidth = cardRect.width;
-        const cardHeight = cardRect.height;
-
-        // Tính toán vị trí tương đối của chuột trên thẻ
-        const mouseX = e.clientX - cardRect.left;
-        const mouseY = e.clientY - cardRect.top;
-
-        // Tính góc xoay
-        const rotateY = ((mouseX / cardWidth) - 0.5) * 10; // -5 đến 5 độ
-        const rotateX = ((mouseY / cardHeight) - 0.5) * -10; // -5 đến 5 độ
-
-        // Áp dụng hiệu ứng
-        card.css('transform', `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
+    // Lightweight 3D hover effect
+    var isHovering = false;
+    $('.project-card').on('mouseenter', function() {
+        isHovering = true;
+    }).on('mouseleave', function() {
+        isHovering = false;
+        $(this).css('transform', 'none');
+    }).on('mousemove', function(e) {
+        if (!isHovering) return;
+        
+        var card = $(this);
+        var cardRect = card[0].getBoundingClientRect();
+        var cardWidth = cardRect.width;
+        var cardHeight = cardRect.height;
+        
+        var mouseX = e.clientX - cardRect.left;
+        var mouseY = e.clientY - cardRect.top;
+        
+        var rotateY = ((mouseX / cardWidth) - 0.5) * 4;
+        var rotateX = ((mouseY / cardHeight) - 0.5) * -4;
+        
+        card.css('transform', 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.01, 1.01, 1.01)');
     });
 
-    // Reset khi ra khỏi thẻ
-    $('.project-card').on('mouseleave', function() {
-        $(this).css('transform', 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)');
+    // Simple hover for category card
+    $('.category-card').on('mouseenter', function() {
+        $(this).find('.category-overlay').css('opacity', 0.3);
+    }).on('mouseleave', function() {
+        $(this).find('.category-overlay').css('opacity', 0);
     });
 
-    // Hiệu ứng hover cho category card
-    $('.category-card').hover(
-        function() {
-            $(this).find('.category-overlay').css('opacity', 0.3);
-        },
-        function() {
-            $(this).find('.category-overlay').css('opacity', 0);
-        }
-    );
-
-    // Chuyển đổi giữa chế độ xem lưới và danh sách
+    // Toggle between grid and list views
     $('.view-button').on('click', function() {
-        const viewMode = $(this).data('view');
-
-        // Cập nhật trạng thái active của nút
+        var viewMode = $(this).data('view');
         $('.view-button').removeClass('active');
         $(this).addClass('active');
-
-        // Hiển thị chế độ xem tương ứng
+        
         if (viewMode === 'grid') {
             $('#project-grid').show();
             $('#project-list').hide();
@@ -558,40 +571,44 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // Hiệu ứng dropdown cho bộ lọc
+    // Filter dropdown
     $('.filter-button').on('click', function() {
         $('.filter-dropdown-content').toggleClass('show');
     });
 
-    // Đóng dropdown khi click ra ngoài
+    // Close dropdown when clicking elsewhere
     $(document).on('click', function(e) {
         if (!$(e.target).closest('.filter-dropdown').length) {
             $('.filter-dropdown-content').removeClass('show');
         }
     });
 
-    // Cuộn mượt khi click vào nút cuộn xuống
+    // Smooth scroll with optimized animation
     $('.scroll-down-indicator').on('click', function() {
         $('html, body').animate({
             scrollTop: $('.project-categories-section').offset().top - 20
-        }, 800);
+        }, 600); // Faster animation
     });
 
-    // Hiệu ứng cho featured projects slider
+    // Initialize slider only if needed
     if ($('.featured-projects-slider').length) {
-        $('.featured-projects-slider').slick({
-            dots: true,
-            arrows: true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 5000,
-            adaptiveHeight: true,
-            prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-chevron-left"></i></button>',
-            nextArrow: '<button type="button" class="slick-next"><i class="fa fa-chevron-right"></i></button>'
-        });
+        // Add a small delay to load slider after critical content
+        setTimeout(function() {
+            $('.featured-projects-slider').slick({
+                dots: true,
+                arrows: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 5000,
+                adaptiveHeight: true,
+                lazyLoad: 'ondemand', // Add lazy loading
+                prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-chevron-left"></i></button>',
+                nextArrow: '<button type="button" class="slick-next"><i class="fa fa-chevron-right"></i></button>'
+            });
+        }, 300);
     }
 });
 </script>
