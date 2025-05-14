@@ -565,7 +565,93 @@ $resources = get_post_meta($post_id, '_service_resources', true);
     </section>
 </div>
 
-<!-- JavaScript code moved to consolidated.js -->
+<script>
+jQuery(document).ready(function($) {
+    // Initialize Swiper for testimonials
+    if ($('.testimonials-slider').length > 0) {
+        var testimonialSwiper = new Swiper('.testimonials-slider', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                992: {
+                    slidesPerView: 3,
+                }
+            }
+        });
+    }
+    
+    // FAQ Accordion
+    $('.faq-question').on('click', function() {
+        var $item = $(this).parent();
+        
+        if ($item.hasClass('active')) {
+            $item.removeClass('active');
+            $item.find('.faq-answer').slideUp();
+        } else {
+            $('.faq-item').removeClass('active');
+            $('.faq-answer').slideUp();
+            
+            $item.addClass('active');
+            $item.find('.faq-answer').slideDown();
+        }
+    });
+    
+    // Create water particles effect
+    function createWaterParticles(containerId, count) {
+        var container = document.getElementById(containerId);
+        if (!container) return;
+        
+        for (var i = 0; i < count; i++) {
+            var particle = document.createElement('div');
+            particle.className = 'water-particle';
+            particle.style.width = Math.random() * 10 + 5 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.bottom = '0';
+            particle.style.opacity = Math.random() * 0.5 + 0.1;
+            container.appendChild(particle);
+            
+            animateParticle(particle);
+        }
+    }
+    
+    function animateParticle(particle) {
+        setTimeout(function() {
+            particle.style.setProperty('--move-x', (Math.random() * 100 - 50) + 'px');
+            particle.classList.add('particle-animate');
+            
+            setTimeout(function() {
+                particle.style.opacity = '0';
+                
+                setTimeout(function() {
+                    if (particle.parentElement) {
+                        particle.classList.remove('particle-animate');
+                        particle.style.bottom = '0';
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.opacity = Math.random() * 0.5 + 0.1;
+                        animateParticle(particle);
+                    }
+                }, 100);
+            }, 8000);
+        }, Math.random() * 2000);
+    }
+    
+    // Initialize water particles
+    createWaterParticles('timelineWaterEffect', 20);
+});
+</script>
 
 <?php
 get_footer();
