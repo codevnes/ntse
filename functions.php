@@ -99,15 +99,6 @@ add_action( 'after_setup_theme', 'ntse_setup', 9 );
  */
 function ntse_scripts() {
     // Enqueue the consolidated JavaScript file that contains all inline JS previously embedded in PHP files
-    wp_enqueue_script('ntse-consolidated', get_stylesheet_directory_uri() . '/assets/js/consolidated.js', array('jquery'), '1.0.0', true);
+    wp_enqueue_script('ntse-consolidated', get_template_directory_uri() . '/assets/js/consolidated.js', array('jquery'), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'ntse_scripts');
-
-/**
- * Enqueue admin scripts.
- */
-function ntse_admin_scripts($hook) {
-    // Enqueue admin JavaScript only on admin pages
-    wp_enqueue_script('ntse-admin', get_stylesheet_directory_uri() . '/assets/js/admin.js', array('jquery'), '1.0.0', true);
-}
-add_action('admin_enqueue_scripts', 'ntse_admin_scripts');

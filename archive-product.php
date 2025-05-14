@@ -172,6 +172,51 @@ $products_query = new WP_Query($args);
     </svg>
 </div>
 
-<!-- JavaScript code moved to consolidated.js -->
+<!-- Script hiệu ứng tùy chỉnh -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Hiệu ứng xuất hiện khi cuộn
+    const animateOnScroll = function() {
+        const items = document.querySelectorAll('.animate-on-scroll');
+        
+        items.forEach(item => {
+            const itemTop = item.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            
+            if (itemTop < windowHeight - 100) {
+                item.classList.add('animate-in');
+            }
+        });
+    };
+    
+    // Hiệu ứng gợn nước khi hover
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        card.addEventListener('mouseenter', function(e) {
+            const ripple = this.querySelector('.water-ripple');
+            ripple.style.left = e.offsetX + 'px';
+            ripple.style.top = e.offsetY + 'px';
+            ripple.classList.add('active');
+            
+            // Thêm hiệu ứng scale cho card
+            this.style.transform = 'scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            const ripple = this.querySelector('.water-ripple');
+            ripple.classList.remove('active');
+            
+            // Trả về kích thước ban đầu
+            this.style.transform = 'scale(1)';
+        });
+    });
+    
+    // Thực hiện animation khi trang tải
+    animateOnScroll();
+    
+    // Thực hiện animation khi cuộn
+    window.addEventListener('scroll', animateOnScroll);
+});
+</script>
 
 <?php get_footer(); ?> 

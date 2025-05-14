@@ -859,6 +859,110 @@ $product_categories = get_terms(array(
 }
 </style>
 
-<!-- JavaScript code moved to consolidated.js -->
+<!-- Script hiệu ứng tùy chỉnh -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Hiệu ứng xuất hiện khi cuộn
+    const animateOnScroll = function() {
+        const items = document.querySelectorAll('.animate-on-scroll');
+
+        items.forEach(item => {
+            const itemTop = item.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (itemTop < windowHeight - 100) {
+                item.classList.add('animate-in');
+            }
+        });
+    };
+
+    // Hiệu ứng gợn nước khi hover
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        card.addEventListener('mouseenter', function(e) {
+            const ripple = this.querySelector('.water-ripple');
+            if (ripple) {
+                ripple.style.left = e.offsetX + 'px';
+                ripple.style.top = e.offsetY + 'px';
+                ripple.classList.add('active');
+            }
+
+            // Thêm hiệu ứng scale cho card
+            this.style.transform = 'scale(1.02)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+            const ripple = this.querySelector('.water-ripple');
+            if (ripple) {
+                ripple.classList.remove('active');
+            }
+
+            // Trả về kích thước ban đầu
+            this.style.transform = 'scale(1)';
+        });
+    });
+
+    // Hiệu ứng giọt nước
+    function createWaterDrop() {
+        const drops = document.querySelectorAll('.water-drop');
+        drops.forEach(drop => {
+            const delay = Math.random() * 5;
+            const duration = Math.random() * 3 + 2;
+            drop.style.animationDelay = delay + 's';
+            drop.style.animationDuration = duration + 's';
+        });
+    }
+
+    // Hiệu ứng bong bóng nổi
+    function animateBubbles() {
+        const bubbles = document.querySelectorAll('.bubble');
+        bubbles.forEach(bubble => {
+            // Thêm một chút ngẫu nhiên cho vị trí ban đầu
+            const randomX = Math.random() * 20 - 10; // -10 đến 10px
+            bubble.style.transform = `translateX(${randomX}px)`;
+        });
+    }
+
+    // Hiệu ứng ripple cho hình ảnh
+    const introImages = document.querySelectorAll('.intro-image');
+    introImages.forEach(image => {
+        image.addEventListener('mouseenter', function() {
+            const ripples = this.querySelectorAll('.ripple');
+            ripples.forEach(ripple => {
+                ripple.style.animationPlayState = 'running';
+            });
+        });
+
+        image.addEventListener('mouseleave', function() {
+            const ripples = this.querySelectorAll('.ripple');
+            ripples.forEach(ripple => {
+                ripple.style.animationPlayState = 'paused';
+            });
+        });
+    });
+
+    // Hiệu ứng nút CTA
+    const ctaButtons = document.querySelectorAll('.intro-button');
+    ctaButtons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.querySelector('.button-effect').style.opacity = '1';
+        });
+
+        button.addEventListener('mouseleave', function() {
+            this.querySelector('.button-effect').style.opacity = '0';
+        });
+    });
+
+    // Thực hiện animation khi trang tải
+    setTimeout(function() {
+        animateOnScroll();
+        createWaterDrop();
+        animateBubbles();
+    }, 100);
+
+    // Thực hiện animation khi cuộn
+    window.addEventListener('scroll', animateOnScroll);
+});
+</script>
 
 <?php get_footer(); ?>
