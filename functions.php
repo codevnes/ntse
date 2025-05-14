@@ -93,3 +93,12 @@ function ntse_setup() {
 
 }
 add_action( 'after_setup_theme', 'ntse_setup', 9 );
+
+/**
+ * Enqueue scripts and styles.
+ */
+function ntse_scripts() {
+    // Enqueue the consolidated JavaScript file that contains all inline JS previously embedded in PHP files
+    wp_enqueue_script('ntse-consolidated', get_template_directory_uri() . '/assets/js/consolidated.js', array('jquery'), '1.0.0', true);
+}
+add_action('wp_enqueue_scripts', 'ntse_scripts');
