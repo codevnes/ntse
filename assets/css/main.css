@@ -3906,19 +3906,7 @@ body.offcanvas-active {
   margin-top: 1rem;
   text-align: right;
 }
-.project-card .project-item-readmore a {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.6rem 1.2rem;
-  background-color: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary);
-  text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  position: relative;
-  overflow: hidden;
-}
+
 .project-card .project-item-readmore a span {
   margin-right: 0.5rem;
 }
