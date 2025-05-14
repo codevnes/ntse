@@ -3253,7 +3253,6 @@ body.offcanvas-active {
 .project-archive-page .project-archive-header {
   position: relative;
   padding: 6rem 0 4rem;
-  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.9) 0%, rgba(var(--primary-dark), 0.95) 100%);
   overflow: hidden;
 }
 .project-archive-page .project-archive-header.water-effect-header {
