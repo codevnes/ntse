@@ -72,15 +72,15 @@
                         // Handle non-numeric logo IDs (default values)
                         if ( !empty($site_logo_id) && !is_numeric( $site_logo_id ) ) {
                             $site_logo = array( $site_logo_id, $width, $height );
-                            }
+                        }
 
                         if ( !empty($site_logo_sticky_id) && !is_numeric( $site_logo_sticky_id ) ) {
                             $site_logo_sticky = array( $site_logo_sticky_id, $width, $height );
-                            }
+                        }
 
                         if ( !empty($site_logo_dark_id) && !is_numeric( $site_logo_dark_id ) ) {
                             $site_logo_dark = array( $site_logo_dark_id, $width, $height );
-                            }
+                        }
                         ?>
                         <a href="<?php echo esc_url( $logo_link ); ?>"
                             title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?><?php echo get_bloginfo( 'name' ) && get_bloginfo( 'description' ) ? ' - ' : ''; ?><?php bloginfo( 'description' ); ?>"
@@ -92,20 +92,20 @@
                                 echo '<img width="' . esc_attr( $site_logo[1] ) . '" height="' . esc_attr( $site_logo[2] ) . '" src="' . esc_url( $site_logo[0] ) . '" class="header_logo header-logo custom-logo" alt="' . $site_title . '"/>';
                                 if ( $site_logo_dark ) echo '<img width="' . esc_attr( $site_logo_dark[1] ) . '" height="' . esc_attr( $site_logo_dark[2] ) . '" src="' . esc_url( $site_logo_dark[0] ) . '" class="header-logo-dark" alt="' . $site_title . '"/>';
                                 else echo '<img width="' . esc_attr( $site_logo[1] ) . '" height="' . esc_attr( $site_logo[2] ) . '" src="' . esc_url( $site_logo[0] ) . '" class="header-logo-dark" alt="' . $site_title . '"/>';
-                                } else {
-                                ?>
+                            } else {
+                            ?>
                                 <svg class="water-logo" width="50" height="50">
                                     <use xlink:href="#water-droplet-logo"></use>
                                 </svg>
                                 <h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
-                                <?php
-                                }
+                            <?php
+                            }
                             ?>
                         </a>
                         <?php
                         if ( get_theme_mod( 'site_logo_slogan' ) ) {
                             echo '<p class="logo-tagline">' . get_bloginfo( 'description' ) . '</p>';
-                            }
+                        }
                         ?>
                     </div>
 
@@ -157,8 +157,8 @@
                             echo '<a href="' . esc_url( $logo_link ) . '" rel="home" class="custom-logo-link">';
                             echo '<img width="' . esc_attr( $site_logo[1] ) . '" height="' . esc_attr( $site_logo[2] ) . '" src="' . esc_url( $site_logo[0] ) . '" class="custom-logo" alt="' . $site_title . '"/>';
                             echo '</a>';
-                            } else {
-                            ?>
+                        } else {
+                        ?>
                             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
                                 <svg class="water-logo" width="40" height="40">
                                     <use xlink:href="#water-droplet-logo"></use>
@@ -183,6 +183,7 @@
                                 'container'      => false,
                                 'menu_class'     => 'offcanvas-menu-items',
                                 'fallback_cb'    => false,
+                                'walker'         => new NTS_Menu_Walker(),
                             )
                         );
                         ?>
@@ -280,6 +281,8 @@
             /* Offcanvas Submenu Styles */
             .offcanvas-menu-items .menu-item-has-children > a {
                 position: relative;
+                display: inline-block;
+                width: calc(100% - 40px);
             }
 
             .offcanvas-menu-items .menu-item-has-children > a::after {
@@ -290,13 +293,16 @@
                 position: absolute;
                 right: 0;
                 top: 0;
-                height: 100%;
+                height: 40px;
                 width: 40px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
                 z-index: 2;
+                border: none;
+                background: transparent;
+                color: inherit;
             }
             
             .offcanvas-menu-items .menu-item-has-children .submenu-toggle::before {
@@ -318,19 +324,24 @@
                 display: none;
                 padding-left: 15px;
                 margin: 5px 0;
+                list-style: none;
             }
 
             .offcanvas-menu-items .sub-menu a {
                 padding: 8px 15px;
                 font-size: 0.95em;
                 opacity: 0.9;
+                display: block;
             }
 
             .offcanvas-menu-items .sub-menu a:hover {
                 opacity: 1;
             }
+            
+            .offcanvas-menu-items li.menu-item-has-children {
+                position: relative;
+            }
         </style>
-        <!-- JavaScript code moved to consolidated.js -->
 	<?php do_action( 'flatsome_after_header' ); ?>
 
 <main id="main" class="<?php flatsome_main_classes(); ?>">
