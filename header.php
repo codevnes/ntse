@@ -280,15 +280,28 @@
             /* Offcanvas Submenu Styles */
             .offcanvas-menu-items .menu-item-has-children > a {
                 position: relative;
-                padding-right: 30px;
             }
 
             .offcanvas-menu-items .menu-item-has-children > a::after {
-                content: '';
+                content: none;
+            }
+            
+            .offcanvas-menu-items .menu-item-has-children .submenu-toggle {
                 position: absolute;
-                right: 10px;
-                top: 50%;
-                transform: translateY(-50%);
+                right: 0;
+                top: 0;
+                height: 100%;
+                width: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 2;
+            }
+            
+            .offcanvas-menu-items .menu-item-has-children .submenu-toggle::before {
+                content: '';
+                display: block;
                 width: 0;
                 height: 0;
                 border-left: 5px solid transparent;
@@ -297,8 +310,8 @@
                 transition: transform 0.3s ease;
             }
 
-            .offcanvas-menu-items .menu-item-has-children.submenu-open > a::after {
-                transform: translateY(-50%) rotate(180deg);
+            .offcanvas-menu-items .menu-item-has-children.submenu-open > .submenu-toggle::before {
+                transform: rotate(180deg);
             }
 
             .offcanvas-menu-items .sub-menu {
@@ -332,6 +345,9 @@
                         createWaterParticlesForMenu();
                     }
                 });
+
+                // Add submenu toggle buttons to all menu items with children
+                $('.offcanvas-menu-items .menu-item-has-children > a').after('<span class="submenu-toggle"></span>');
 
                 // Close offcanvas menu
                 $('.offcanvas-overlay, .offcanvas-close').on('click', function () {
@@ -422,11 +438,13 @@
                 // Run bubble animation
                 animateHeaderBubbles();
 
-                // Handle submenu toggling in offcanvas menu
-                $('.offcanvas-menu-items .menu-item-has-children > a').on('click', function(e) {
+                // Handle submenu toggling in offcanvas menu - only on arrow click
+                $('.offcanvas-menu-items .submenu-toggle').on('click', function(e) {
                     e.preventDefault();
-                    const $submenu = $(this).next('.sub-menu');
-                    const $parent = $(this).parent();
+                    e.stopPropagation();
+                    
+                    const $parent = $(this).parent('.menu-item-has-children');
+                    const $submenu = $parent.find('> .sub-menu');
                     
                     // Toggle submenu
                     $submenu.slideToggle(300);
@@ -434,7 +452,7 @@
                     
                     // Close other submenus at the same level
                     $parent.siblings('.menu-item-has-children').removeClass('submenu-open')
-                        .find('.sub-menu').slideUp(300);
+                        .find('> .sub-menu').slideUp(300);
                 });
 
                 // Close all submenus when closing offcanvas menu
